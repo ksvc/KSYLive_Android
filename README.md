@@ -12,10 +12,12 @@ KSYLive库融合了播放和推流SDK。
 * KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android》
 
 ## 三. 包大小说明
-|名称|库名称|库size| ipa size|  iOS要求|
-| :---: | :---:|:---:|:---:|:---:|
-|直播SDK静态库| libksygpulive.framework|100M|5.7M| 7.0及以上|
-|直播SDK动态库| libksygpulivedylib.framework|87M|6.9M| 8.0及以上|
+以armeabi-v7a为例
+|名称|库名称|库size| apk size|  
+| :---: | :---:|:---:|:---:|
+|KSYMediaPlayer动态库| libksyplayer.so|3.3M|N/A| 
+|KSYStreamer动态库| libksystreamer.so|4.0M|N/A|
+
 
 ## 反馈与建议
 - 主页：[金山云](http://v.ksyun.com)
