@@ -22,7 +22,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 
 ## 二. 文档说明
 * KSYMediaPlayer wiki <https://github.com/ksvc/KSYMediaPlayer_Android>
-* KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android》
+* KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android>
 
 ## 三. 包大小说明
 
