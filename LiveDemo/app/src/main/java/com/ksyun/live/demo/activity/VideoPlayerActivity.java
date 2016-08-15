@@ -710,7 +710,7 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
                 mPlayerStartBtn.setBackgroundResource(R.drawable.qyvideo_pause_btn);
                 ksyMediaPlayer.pause();
                 if (chooseview.equals(Settings.USETEXTURE)){
-                    sthread.destroy();
+                    sthread.interrupt();
                 }
                 mPauseStartTime = System.currentTimeMillis();
             }else {
