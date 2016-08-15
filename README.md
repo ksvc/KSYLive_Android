@@ -30,9 +30,9 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 
 |名称|库名称|库size| apk size|  
 | :---: | :---:|:---:|:---:|
-|KSYMediaPlayer动态库| libksyplayer.so|3.3M|N/A| 
-|KSYStreamer动态库| libksystreamer.so|4.0M|N/A|
-|直播融合库|libksylive.so|4.6M|N/A|
+|KSYMediaPlayer动态库| libksyplayer.so|3.3M|3.7M| 
+|KSYStreamer动态库| libksystreamer.so|4.0M|5.6M|
+|直播融合库|libksylive.so|4.6M|4.9M|
 
 ## 反馈与建议
 - 主页：[金山云](http://v.ksyun.com)
