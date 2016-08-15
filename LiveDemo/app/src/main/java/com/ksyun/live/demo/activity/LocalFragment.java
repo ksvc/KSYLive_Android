@@ -68,15 +68,9 @@ public class LocalFragment extends android.app.Fragment {
                 Video v = listVideos.get(position);
                 Log.e("adasdasd",v.getPath());
 
-                if (choosevr.equals(Settings.VRON)){
-                    Intent intent  = new Intent(getActivity(),TestVideoActivity.class);
-                    intent.putExtra("path",v.getPath());
-                    startActivity(intent);
-                }else{
                     Intent intent = new Intent(getActivity(),VideoPlayerActivity.class);
                     intent.putExtra("path", v.getPath());
                     startActivity(intent);
-                }
 
             }
         });

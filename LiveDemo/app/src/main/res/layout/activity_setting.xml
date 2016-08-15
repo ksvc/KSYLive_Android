@@ -37,33 +37,13 @@
         android:textOff="@string/debugoff"
         android:textOn="@string/debugon"/>
 
-    <TextView
-        android:id="@+id/txt_vr_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="20dp"
-        android:layout_below="@+id/txt_set_switch"
-        android:text="@string/vrchange"/>
-
-    <Switch
-        android:id="@+id/switch_vr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/switch_set"
-        android:layout_toRightOf="@+id/txt_set_switch"
-        android:layout_marginLeft="30dp"
-        android:textOff="@string/debugoff"
-        android:textOn="@string/debugon"/>
 
     <LinearLayout
         android:id="@+id/linear_set_st"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/switch_vr"
+        android:layout_below="@+id/switch_set"
         android:orientation="horizontal">
 
         <TextView

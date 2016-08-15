@@ -27,7 +27,6 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
     private RadioButton radiosoft;
     private RadioButton radiohard;
     private Switch debugswitch;
-    private Switch vrswitch;
 
     private RadioGroup mChooseSurface;
     private RadioGroup mChooseCodec;
@@ -52,23 +51,9 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
         mChooseCodec.setOnCheckedChangeListener(this);
 
         debugswitch = (Switch)findViewById(R.id.switch_set);
-        vrswitch = (Switch)findViewById(R.id.switch_vr);
 
         initSetting(choosedecode,chooseview,choosedebug,choosevr);
 
-        vrswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
-                    editor.putString("choose_vr", Settings.VRON);
-                    Toast.makeText(SettingActivity.this, "VR被打开", Toast.LENGTH_SHORT).show();
-                } else {
-                    editor.putString("choose_vr",Settings.VROFF);
-                    Toast.makeText(SettingActivity.this, "VR被关闭", Toast.LENGTH_SHORT).show();
-                }
-                editor.commit();
-            }
-        });
 
         debugswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -125,18 +110,6 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
             default:
                 debugswitch.setChecked(false);
                 editor.putString("choose_debug",Settings.DEBUGOFF);
-                break;
-        }
-        switch (choosevr){
-            case Settings.VROFF:
-                vrswitch.setChecked(false);
-                break;
-            case Settings.VRON:
-                vrswitch.setChecked(true);
-                break;
-            default:
-                vrswitch.setChecked(false);
-                editor.putString("choose_vr",Settings.VROFF);
                 break;
         }
         editor.commit();

@@ -93,11 +93,6 @@
         </activity>
         <activity android:name=".activity.HistoryActivity"></activity>
 
-        <activity
-            android:name=".activity.TestVideoActivity"
-            android:configChanges="screenSize|orientation"
-            android:screenOrientation="landscape"></activity>
-
     </application>
 
 </manifest>
