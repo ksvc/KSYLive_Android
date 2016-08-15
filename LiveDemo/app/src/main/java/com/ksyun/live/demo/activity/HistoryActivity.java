@@ -62,15 +62,9 @@ public class HistoryActivity extends Activity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String path = listurl.get(i).get("url");
-                if (choosevr.equals(Settings.VRON)){
-                    Intent intent  = new Intent(HistoryActivity.this,TestVideoActivity.class);
-                    intent.putExtra("path",path);
-                    startActivity(intent);
-                }else{
                     Intent intent = new Intent(HistoryActivity.this,VideoPlayerActivity.class);
                     intent.putExtra("path",path);
                     startActivity(intent);
-                }
 
             }
         });

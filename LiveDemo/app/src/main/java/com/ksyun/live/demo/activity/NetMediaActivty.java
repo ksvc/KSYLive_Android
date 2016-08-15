@@ -99,16 +99,9 @@ public class NetMediaActivty extends AppCompatActivity implements View.OnClickLi
                     NetDb.createDate(path);
                 }
                 NetDb.close();
-
-                if(choosevr.equals(Settings.VRON)){
-                    Intent intent  = new Intent(NetMediaActivty.this,TestVideoActivity.class);
-                    intent.putExtra("path",path);
-                    startActivity(intent);
-                }else{
                     Intent intent = new Intent(NetMediaActivty.this,VideoPlayerActivity.class);
                     intent.putExtra("path",path);
                     startActivity(intent);
-                }
 
 
             }

@@ -31,7 +31,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.android.support:design:24.1.1'
-    compile files('libs/vrlib.jar')
     compile files('libs/zxing.jar')
     compile files('libs/bugly_crash_release.jar')
 }
