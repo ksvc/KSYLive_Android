@@ -25,6 +25,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 * KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android>
 
 ## 三. 包大小说明
+此说明以加入arm63-v8a X86 armeabi-v7a 三个体系结构为例进行说明
 
 注明：lib 为项目动态库so的大小
       res 资源文件目录
