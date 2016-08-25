@@ -22,19 +22,22 @@ public class QosThread extends Thread {
 
     private boolean mRunning;
 
-    public QosThread(ActivityManager manager, Handler handler) {
+    public QosThread(ActivityManager manager, Handler handler,Context mContext) {
         mHandler = handler;
         mCpuStats = new Cpu();
         mActivityManager = manager;
         mi = new Debug.MemoryInfo();
         mRunning = true;
         mQosObject = new QosObject();
+        if(mContext!=null){
+            this.mContext = mContext;
+        }
     }
 
     @Override
     public void run() {
         while(mRunning) {
-            mCpuStats.parseTopResults();
+            mCpuStats.parseTopResults(mContext.getPackageName());
 
             Debug.getMemoryInfo(mi);
 

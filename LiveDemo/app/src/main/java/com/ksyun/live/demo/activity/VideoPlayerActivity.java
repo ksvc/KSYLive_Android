@@ -442,7 +442,7 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
 
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
-        mQosThread = new QosThread(activityManager, mHandler);
+        mQosThread = new QosThread(activityManager, mHandler,mContext);
 
         mDataSource = getIntent().getStringExtra("path");
 
