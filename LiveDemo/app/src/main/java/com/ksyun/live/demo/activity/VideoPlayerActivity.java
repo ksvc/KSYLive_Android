@@ -487,8 +487,6 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
         }
     }
 
-
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -535,7 +533,6 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             videoPlayEnd();
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
