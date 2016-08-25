@@ -13,6 +13,7 @@ public class Cpu {
     static final String USER_CPU_REGEX = "((?i)(use?r\\s+[0-9]{1,2}(\\.[0-9]{1,2})?\\%))|([0-9]{1,2}\\.[0-9]{1,2}\\%\\s+(?i)(use?r))";
     static final String SYSTEM_CPU_REGEX = "((?i)(sys(tem)?\\s+[0-9]{1,2}(\\.[0-9]{1,2})?\\%))|([0-9]{1,2}\\.[0-9]{1,2}\\%\\s+(?i)(sys(tem)?))";
 
+    private String mPackageName;
     private String m_sTopResults;
 
     /**
@@ -58,7 +59,7 @@ public class Cpu {
             //* Read all the available output and store it in the class member
             while ( (sLine = ifp.readLine()) != null)
             {
-                if(sLine.indexOf("com.ksyun.player.demo") >= 0) {
+                if(sLine.indexOf(mPackageName) >= 0) {
                     this.m_sTopResults = sLine;
                     break;
                 }
@@ -80,13 +81,15 @@ public class Cpu {
         }
     }
 
-    public void parseTopResults()
+    public void parseTopResults(String name)
     {
         String sUserCpuUsage		= null;
         String sSystemCpuUsage		= null;
 
         Pattern xRegexSearchPattern 	= null;
         Matcher xSearch  				= null;
+
+        mPackageName = name;
 
         getCPUInfo();
 
