@@ -442,7 +442,7 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
 
         ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 
-        mQosThread = new QosThread(activityManager, mHandler);
+        mQosThread = new QosThread(activityManager, mHandler,mContext);
 
         mDataSource = getIntent().getStringExtra("path");
 
@@ -486,8 +486,6 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     protected void onDestroy() {
@@ -535,7 +533,6 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
         if(keyCode == KeyEvent.KEYCODE_BACK) {
             videoPlayEnd();
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
