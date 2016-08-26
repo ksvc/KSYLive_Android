@@ -35,7 +35,6 @@ import com.ksyun.live.demo.R;
 import com.ksyun.live.demo.model.Strings;
 import com.ksyun.live.demo.util.QosObject;
 import com.ksyun.live.demo.util.QosThread;
-import com.ksyun.live.demo.util.ScreenThread;
 import com.ksyun.live.demo.util.Settings;
 import com.ksyun.media.player.IMediaPlayer;
 import com.ksyun.media.player.KSYMediaMeta;
@@ -133,16 +132,11 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
 
 
     private String mDataSource;
-    private ScreenThread sthread;
 
     private IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer mp) {
 
-            if (chooseview.equals(Settings.USETEXTURE)){
-                sthread = new ScreenThread(mVideoTextureView);
-                sthread.start();
-            }
 
             mVideoWidth = ksyMediaPlayer.getVideoWidth();
             mVideoHeight = ksyMediaPlayer.getVideoHeight();
@@ -707,7 +701,6 @@ public class VideoPlayerActivity extends Activity implements TextureView.Surface
                 mPlayerStartBtn.setBackgroundResource(R.drawable.qyvideo_pause_btn);
                 ksyMediaPlayer.pause();
                 if (chooseview.equals(Settings.USETEXTURE)){
-                    sthread.interrupt();
                 }
                 mPauseStartTime = System.currentTimeMillis();
             }else {
