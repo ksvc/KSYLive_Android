@@ -1,5 +1,6 @@
 package com.ksyun.live.demo;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -19,6 +20,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -517,6 +519,16 @@ public class CameraActivityPip extends Activity {
     }
 
     public ArrayList<HashMap<String,String>> gitVideo(){
+
+        int permission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{"android.permission.READ_EXTERNAL_STORAGE"},//需要请求的所有权限，这是个数组String[]
+                    1//请求码
+            );
+        }
         ArrayList<HashMap<String,String>> videolist = new ArrayList<HashMap<String,String>>();
         String[] mediaColumns = {MediaStore.Video.Media.DATA};
         Cursor cursor = managedQuery(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
