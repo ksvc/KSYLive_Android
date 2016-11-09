@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_beauty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="美颜"/>
+        <!--<Button-->
+            <!--android:id="@+id/btn_pip"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="画中画"/>-->
+        <Button
+            android:id="@+id/btn_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="美声"/>
+        <Button
+            android:id="@+id/btn_water"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="水印"/>
+        <Button
+            android:id="@+id/btn_mix"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="混音"/>
+        <Button
+            android:id="@+id/btn_other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="其他"/>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
