@@ -43,6 +43,12 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 
 **这里可以看出，融合库比单纯推流和播放的apk size从14.6M减小了4.5M，到10.1M。（当然，如果不使用三个体系结构的话，并不会到10M大小。如果对apk size敏感，建议只使用armeabi-v7a库。）**
 **推荐大家使用融合库！**
+
+## 四、下载集成
+clone [github库](https://github.com/ksvc/KSYLive_Android)，使用github库中的demo和lib库。
+
+或者从oschina镜像下载，国内访问速度更快：https://git.oschina.net/ksvc/KSYLive_Android
+
 ## 反馈与建议
 - 主页：[金山云](http://v.ksyun.com)
 - 邮箱：<zengfanping@kingsoft.com>
