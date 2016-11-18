@@ -40,14 +40,17 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void permissionCheck() {
+        int cameraPerm = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         int readPerm = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        if (readPerm != PackageManager.PERMISSION_GRANTED) {
+        if (cameraPerm != PackageManager.PERMISSION_GRANTED ||
+                readPerm != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 Log.e("Player", "No CAMERA or AudioRecord permission, please check");
                 Toast.makeText(this, "No CAMERA or AudioRecord permission, please check",
                         Toast.LENGTH_LONG).show();
             } else {
-                String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                String[] permissions = {Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE};
                 ActivityCompat.requestPermissions(this, permissions,
                         1);
             }
