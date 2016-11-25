@@ -49,6 +49,10 @@ clone [github库](https://github.com/ksvc/KSYLive_Android)，使用github库中�
 
 或者从oschina镜像下载，国内访问速度更快：https://git.oschina.net/ksvc/KSYLive_Android
 
+## FAQ
+
+已知的问题可参见[FAQ](https://github.com/ksvc/KSYLive_Android/wiki/FAQ)
+
 ## 反馈与建议
 - 主页：[金山云](http://v.ksyun.com)
 - 邮箱：<zengfanping@kingsoft.com>
