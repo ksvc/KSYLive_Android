@@ -30,6 +30,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ksyun.media.player.IMediaPlayer;
 import com.ksyun.media.streamer.capture.camera.CameraTouchHelper;
 import com.ksyun.media.streamer.filter.audio.AudioFilterBase;
 import com.ksyun.media.streamer.filter.audio.AudioReverbFilter;
@@ -41,7 +42,6 @@ import com.ksyun.media.streamer.kit.OnAudioRawDataListener;
 import com.ksyun.media.streamer.kit.OnPreviewFrameListener;
 import com.ksyun.media.streamer.kit.StreamerConstants;
 import com.ksyun.media.streamer.logstats.StatsLogReport;
-import com.ksyun.media.streamer.util.audio.KSYBgmPlayer;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -219,6 +219,11 @@ public class CameraActivity extends Activity implements
             mPrintDebugInfo = bundle.getBoolean(SHOW_DEBUGINFO, false);
         }
         mStreamer.setDisplayPreview(mCameraPreviewView);
+        //if (mIsLandscape) {
+        //    mStreamer.setOffscreenPreview(1280, 720);
+        //} else {
+        //    mStreamer.setOffscreenPreview(720, 1280);
+        //}
         mStreamer.setEnableStreamStatModule(true);
         mStreamer.enableDebugLog(true);
         mStreamer.setFrontCameraMirror(mFrontMirrorCheckBox.isChecked());
@@ -241,6 +246,11 @@ public class CameraActivity extends Activity implements
                         ImgTexFilterMgt.KSY_FILTER_BEAUTY_DISABLE);
             }
         });
+
+        // add RGBA buffer filter to ImgTexFilterMgt, this would cause performance drop,
+        // only valid after Android 4.4
+        //RGBABufDemoFilter demoFilter = new RGBABufDemoFilter(mStreamer.getGLRender());
+        //mStreamer.getImgTexFilterMgt().setExtraFilter(demoFilter);
 
         // touch focus and zoom support
         CameraTouchHelper cameraTouchHelper = new CameraTouchHelper();
@@ -308,6 +318,7 @@ public class CameraActivity extends Activity implements
 
     private void stopStream() {
         mStreamer.stopStream();
+        mChronometer.setBase(SystemClock.elapsedRealtime());
         mChronometer.stop();
         mShootingText.setText(START_STRING);
         mShootingText.postInvalidate();
@@ -350,10 +361,10 @@ public class CameraActivity extends Activity implements
     private void showWaterMark() {
         if (!mIsLandscape) {
             mStreamer.showWaterMarkLogo(mLogoPath, 0.08f, 0.04f, 0.20f, 0, 0.8f);
-            mStreamer.showWaterMarkTime(0.03f, 0.01f, 0.35f, Color.RED, 1.0f);
+            mStreamer.showWaterMarkTime(0.03f, 0.01f, 0.35f, Color.WHITE, 1.0f);
         } else {
             mStreamer.showWaterMarkLogo(mLogoPath, 0.05f, 0.09f, 0, 0.20f, 0.8f);
-            mStreamer.showWaterMarkTime(0.01f, 0.03f, 0.22f, Color.RED, 1.0f);
+            mStreamer.showWaterMarkTime(0.01f, 0.03f, 0.22f, Color.WHITE, 1.0f);
         }
     }
 
@@ -677,24 +688,26 @@ public class CameraActivity extends Activity implements
 
     private void onBgmChecked(boolean isChecked) {
         if (isChecked) {
-            mStreamer.getAudioPlayerCapture().getBgmPlayer()
-                    .setOnCompletionListener(new KSYBgmPlayer.OnCompletionListener() {
+            // use KSYMediaPlayer instead of KSYBgmPlayer
+            mStreamer.getAudioPlayerCapture().setEnableMediaPlayer(true);
+            mStreamer.getAudioPlayerCapture().getMediaPlayer()
+                    .setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
                         @Override
-                        public void onCompletion(KSYBgmPlayer bgmPlayer) {
+                        public void onCompletion(IMediaPlayer iMediaPlayer) {
                             Log.d(TAG, "End of the currently playing music");
                         }
                     });
-            mStreamer.getAudioPlayerCapture().getBgmPlayer()
-                    .setOnErrorListener(new KSYBgmPlayer.OnErrorListener() {
+            mStreamer.getAudioPlayerCapture().getMediaPlayer()
+                    .setOnErrorListener(new IMediaPlayer.OnErrorListener() {
                         @Override
-                        public void onError(KSYBgmPlayer bgmPlayer, int what, int extra) {
-                            Log.e(TAG, "onBgmError: " + what);
+                        public boolean onError(IMediaPlayer iMediaPlayer, int what, int extra) {
+                            Log.e(TAG, "OnErrorListener, Error:" + what + ", extra:" + extra);
+                            return false;
                         }
                     });
-            mStreamer.getAudioPlayerCapture().getBgmPlayer().setVolume(1.0f);
-            mStreamer.getAudioPlayerCapture().getBgmPlayer().setMute(false);
+            mStreamer.getAudioPlayerCapture().getMediaPlayer().setVolume(0.4f, 0.4f);
+            mStreamer.setEnableAudioMix(true);
             mStreamer.startBgm(mBgmPath, true);
-            mStreamer.setHeadsetPlugged(true);
         } else {
             mStreamer.stopBgm();
         }

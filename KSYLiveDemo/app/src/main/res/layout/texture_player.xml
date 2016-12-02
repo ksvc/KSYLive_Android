@@ -17,6 +17,14 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 
+
+    <TextView
+        android:id="@+id/loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@color/player_yellow"/>
+
     <RelativeLayout
         android:id="@+id/player_qos"
         android:layout_width="wrap_content"
@@ -111,6 +119,38 @@
             android:layout_below="@+id/player_dns_time"
             android:textColor="@color/player_yellow"
             android:textSize="10dp"/>
+
+        <TextView
+            android:id="@+id/player_buffer_empty_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/player_http_connection_time"
+            android:textColor="@color/player_yellow"
+            android:textSize="10dp"/>
+
+        <TextView
+            android:id="@+id/player_buffer_empty_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/player_buffer_empty_count"
+            android:textColor="@color/player_yellow"
+            android:textSize="10dp"/>
+
+        <TextView
+            android:id="@+id/player_decode_fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/player_buffer_empty_duration"
+            android:textColor="@color/player_yellow"
+            android:textSize="10dp"/>
+
+        <TextView
+            android:id="@+id/player_output_fps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/player_decode_fps"
+            android:textColor="@color/player_yellow"
+            android:textSize="10dp"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -119,7 +159,6 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_alignParentTop="true">
-
 
         <Button
             android:id="@+id/player_scale"
@@ -144,8 +183,7 @@
             android:id="@+id/btn_rotate_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/player_reload"
             android:textSize="10dp"
             android:textColor="@color/player_black"
             android:text="旋转"/>
@@ -154,10 +192,19 @@
             android:id="@+id/btn_screen_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/btn_rotate_player"
+            android:layout_toRightOf="@+id/btn_rotate_player"
             android:textColor="@color/player_black"
             android:textSize="10dp"
             android:text="截屏"/>
+
+        <Button
+            android:id="@+id/player_mirror"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="镜像"
+            android:layout_toRightOf="@+id/btn_screen_player"
+            android:textColor="@color/player_black" />
 
         <Button
             android:id="@+id/btn_mute_player"
@@ -170,15 +217,72 @@
             android:text="静音"/>
 
         <Button
-            android:id="@+id/btn_replay"
+            android:id="@+id/player_deinterlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="反交错ON"
+            android:layout_toRightOf="@+id/btn_mute_player"
+            android:layout_below="@+id/player_reload"
+            android:textColor="@color/player_black" />
+
+        <Button
+            android:id="@+id/btn_translation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_below="@+id/player_reload"
-            android:layout_toRightOf="@+id/btn_mute_player"
+            android:layout_toRightOf="@+id/player_deinterlace"
+            android:layout_below="@+id/btn_rotate_player"
             android:textColor="@color/player_black"
             android:textSize="10dp"
-            android:text="重置播放器"/>
+            android:text="平移"/>
+
+        <Button
+            android:id="@+id/btn_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/btn_translation"
+            android:layout_below="@+id/btn_screen_player"
+            android:textColor="@color/player_black"
+            android:textSize="10dp"
+            android:text="Louder"/>
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/player_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/player_start"
+            android:layout_width="@dimen/player_panel_start_btn"
+            android:layout_height="@dimen/player_panel_start_btn"
+            android:background="@drawable/qyvideo_start_btn"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/player_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="00:00/00:00"
+                android:layout_alignParentLeft="true"/>
+
+            <SeekBar
+                android:id="@+id/player_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/player_time"
+                android:focusable="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
