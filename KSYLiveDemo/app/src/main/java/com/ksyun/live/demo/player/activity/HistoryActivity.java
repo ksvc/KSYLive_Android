@@ -68,6 +68,11 @@ public class HistoryActivity extends Activity{
                     intent.putExtra("path",path);
                     startActivity(intent);
                 }
+                else if (chooseview.equals(Settings.USEKSYVIVEW)){
+                    Intent intent = new Intent(HistoryActivity.this,KSYSurfaceActivity.class);
+                    intent.putExtra("path",path);
+                    startActivity(intent);
+                }
                 else{
                     Intent intent = new Intent(HistoryActivity.this,SurfaceActivity.class);
                     intent.putExtra("path",path);

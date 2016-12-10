@@ -23,6 +23,7 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
     private SharedPreferences.Editor editor;
     private RadioButton radiosurface;
     private RadioButton radioksytexture;
+    private RadioButton radioksyview;
     private RadioButton radioglrenderview;
     private RadioButton radiosoft;
     private RadioButton radiohard;
@@ -73,6 +74,7 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
         radiosurface = (RadioButton)findViewById(R.id.use_surfaceview);
         radioksytexture = (RadioButton)findViewById(R.id.use_ksytextureview);
         radioglrenderview = (RadioButton)findViewById(R.id.glrender_view);
+        radioksyview = (RadioButton)findViewById(R.id.use_ksyview);
 
         switch (choosedecode){
             case Settings.USEHARD:
@@ -92,6 +94,9 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
                 break;
             case Settings.USEKSYTEXTURE:
                 mChooseSurface.check(radioksytexture.getId());
+                break;
+            case Settings.USEKSYVIVEW:
+                mChooseSurface.check(radioksyview.getId());
                 break;
             case Settings.USEKGLRENDER:
                 mChooseSurface.check(radioglrenderview.getId());
@@ -126,6 +131,9 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
                 break;
             case R.id.use_ksytextureview:
                 editor.putString("choose_view", Settings.USEKSYTEXTURE);
+                break;
+            case R.id.use_ksyview:
+                editor.putString("choose_view", Settings.USEKSYVIVEW);
                 break;
             case R.id.glrender_view:
                 editor.putString("choose_view", Settings.USEKGLRENDER);

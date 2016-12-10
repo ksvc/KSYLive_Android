@@ -6,6 +6,7 @@ package com.ksyun.live.demo.player.util;
 public class Settings {
     public static final String USESUFACE="usesufaceview";
     public static final String USEKSYTEXTURE="useksytextureview";
+    public static final String USEKSYVIVEW="useksyvideoview";
     public static final String USEKGLRENDER="useglrender";
     public static final String USEHARD="useharddecode";
     public static final String USESOFT="usesoftdecode";

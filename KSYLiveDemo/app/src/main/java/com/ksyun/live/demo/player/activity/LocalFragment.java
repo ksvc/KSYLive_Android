@@ -104,6 +104,11 @@ public class LocalFragment extends android.app.Fragment implements SwipeRefreshL
                    intent.putExtra("path",v.getPath());
                    startActivity(intent);
                }
+               else if (chooseview.equals(Settings.USEKSYVIVEW)){
+                   Intent intent = new Intent(getActivity(),KSYSurfaceActivity.class);
+                   intent.putExtra("path",v.getPath());
+                   startActivity(intent);
+               }
                else{
                     Intent intent = new Intent(getActivity(), SurfaceActivity.class);
                     intent.putExtra("path",v.getPath());
