@@ -67,6 +67,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/set_ksytexture" />
+
+            <RadioButton android:id="@+id/use_ksyview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/set_ksyview" />
+
             <RadioButton android:id="@+id/glrender_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

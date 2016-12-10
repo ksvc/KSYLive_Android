@@ -14,6 +14,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="click_to_shoot">开始直播</string>
+    <string name="start_recording">开始录制</string>
     <string name="beauty_switcher">美颜滤镜</string>
     <string name="watermark">水印</string>
     <string name="pitch">升降调</string>
@@ -54,6 +55,7 @@
     <string name="debugchange">Debubg开关</string>
     <string name="vrchange">VR开关</string>
     <string name="set_ksytexture">KSYTexture</string>
+    <string name="set_ksyview">KSYVideoView</string>
     <string name="glrender_view">GLRednerView</string>
     <string name="audio_filter_selected">音频滤镜</string>
     <string name="audio_only">音频推流</string>
