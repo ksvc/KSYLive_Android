@@ -8,7 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Theme.NoTitleBar" parent="@android:style/Theme.NoTitleBar" />
+    <style name="Theme.NoTitleBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/DefaultAnimation</item>
+    </style>
 
     <style name="Theme" parent="@android:style/Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
@@ -29,7 +32,7 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
-    <style name="Theme.RiseAnimation" parent="@style/Theme">
+    <style name="Theme.RiseAnimation" parent="@style/Theme.NoTitleBar">
         <item name="android:windowAnimationStyle">@style/RiseAnimation</item>
     </style>
 
