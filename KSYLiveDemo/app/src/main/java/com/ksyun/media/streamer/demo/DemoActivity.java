@@ -178,6 +178,7 @@ public class DemoActivity extends Activity
                         encodeMethod = StreamerConstants.ENCODE_METHOD_SOFTWARE_COMPAT;
                     }
 
+                    //TODO
                     if (mSceneDefaultButton.isChecked()) {
                         encodeScene = VideoEncodeFormat.ENCODE_SCENE_DEFAULT;
                     } else {
