@@ -292,7 +292,7 @@ public class CameraActivity extends Activity implements
         //} else {
         //    mStreamer.setOffscreenPreview(720, 1280);
         //}
-        //断网等异常case触发自动重练
+        //断网等异常case触发自动重连
         mStreamer.setEnableAutoRestart(true, 3000);
         mStreamer.setFrontCameraMirror(mFrontMirrorCheckBox.isChecked());
         mStreamer.setMuteAudio(mMuteCheckBox.isChecked());
