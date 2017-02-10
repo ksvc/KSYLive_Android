@@ -298,6 +298,13 @@ public class SurfaceActivity extends Activity implements View.OnClickListener{
         }
     };
 
+    private IMediaPlayer.OnMessageListener mOnMessageListener = new IMediaPlayer.OnMessageListener() {
+        @Override
+        public void onMessage(IMediaPlayer iMediaPlayer, String name, String info, double number) {
+            Log.e(TAG, "name:"+name+",info:"+info+",number:"+number);
+        }
+    };
+
     private View.OnClickListener mVideoScaleButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -431,6 +438,7 @@ public class SurfaceActivity extends Activity implements View.OnClickListener{
         ksyMediaPlayer.setOnErrorListener(mOnErrorListener);
         ksyMediaPlayer.setOnSeekCompleteListener(mOnSeekCompletedListener);
         ksyMediaPlayer.setOnLogEventListener(mOnLogEventListener);
+        ksyMediaPlayer.setOnMessageListener(mOnMessageListener);
         ksyMediaPlayer.setScreenOnWhilePlaying(true);
         ksyMediaPlayer.setBufferTimeMax(3);
         ksyMediaPlayer.setTimeout(5, 30);
