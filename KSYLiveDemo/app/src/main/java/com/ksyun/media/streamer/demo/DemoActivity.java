@@ -2,6 +2,7 @@ package com.ksyun.media.streamer.demo;
 
 import com.ksyun.live.demo.R;
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -130,7 +131,7 @@ public class DemoActivity extends Activity
                 int encodeMethod;
                 int encodeScene;
                 int encodeProfile;
-                boolean landscape;
+                int orientation;
                 boolean startAuto;
                 boolean showDebugInfo;
 
@@ -193,13 +194,20 @@ public class DemoActivity extends Activity
                         encodeProfile = VideoEncodeFormat.ENCODE_PROFILE_HIGH_PERFORMANCE;
                     }
 
-                    landscape = mLandscapeButton.isChecked();
+                    if (mLandscapeButton.isChecked()) {
+                        orientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    } else if (mPortraitButton.isChecked()) {
+                        orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    } else {
+                        orientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+                    }
+
                     startAuto = mAutoStartCheckBox.isChecked();
                     showDebugInfo = mShowDebugInfoCheckBox.isChecked();
 
                     CameraActivity.startActivity(getApplicationContext(), 0,
                             mUrlEditText.getText().toString(), frameRate, videoBitRate,
-                            audioBitRate, videoResolution, landscape, encodeType,  encodeMethod,
+                            audioBitRate, videoResolution, orientation, encodeType,  encodeMethod,
                             encodeScene, encodeProfile, startAuto, showDebugInfo);
                 }
                 break;

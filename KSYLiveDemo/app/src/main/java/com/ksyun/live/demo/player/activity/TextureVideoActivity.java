@@ -292,6 +292,13 @@ public class TextureVideoActivity extends Activity implements View.OnClickListen
         }
     };
 
+    private IMediaPlayer.OnMessageListener mOnMessageListener = new IMediaPlayer.OnMessageListener() {
+        @Override
+        public void onMessage(IMediaPlayer iMediaPlayer, String name, String info, double number) {
+            Log.e(TAG, "name:"+name+",info:"+info+",number:"+number);
+        }
+    };
+
     private View.OnClickListener mVideoScaleButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -432,6 +439,7 @@ public class TextureVideoActivity extends Activity implements View.OnClickListen
         mVideoView.setOnVideoSizeChangedListener(mOnVideoSizeChangeListener);
         mVideoView.setOnErrorListener(mOnErrorListener);
         mVideoView.setOnSeekCompleteListener(mOnSeekCompletedListener);
+        mVideoView.setOnMessageListener(mOnMessageListener);
         mVideoView.setScreenOnWhilePlaying(true);
         mVideoView.setBufferTimeMax(1.0f);
         mVideoView.setTimeout(5, 30);
