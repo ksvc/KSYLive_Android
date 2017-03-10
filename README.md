@@ -1,5 +1,5 @@
 # KSYLive_Android
-## 一. 功能介绍
+## 1. 功能介绍
 KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移动直播SDK。具体功能：
 * [x]  美颜
 * [x] 美声
@@ -18,15 +18,25 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 具体播放功能请见：
 * [KSYMediaPlayer_Android](https://github.com/ksvc/KSYMediaPlayer_Android)
 
-## 运行环境
+### 1.1 运行环境
 - 最低支持版本为Android 4.0 (API level 15)
 - 支持的cpu架构：armv7, arm64, x86
 
-## 二. 文档说明
+
+### 1.2 关于费用
+金山云SDK保证，提供的[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)可以用于商业应用，不会收取任何SDK使用费用。但是基于[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)的其他商业服务，会由特定供应商收取授权费用，大致包括：
+
+1. 云存储
+1. CDN分发
+1. 动态贴纸
+1. 连麦
+1. 第三方美颜
+
+## 2. 文档说明
 * KSYMediaPlayer wiki <https://github.com/ksvc/KSYMediaPlayer_Android>
 * KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android>
 
-## 三. 包大小说明
+## 3. 包大小说明
 此说明以加入arm63-v8a X86 armeabi-v7a 三个体系结构为例进行说明
 
 注明：
@@ -46,7 +56,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 **这里可以看出，融合库比单纯推流和播放的apk size从14.6M减小了4.5M，到10.1M。（当然，如果不使用三个体系结构的话，并不会到10M大小。如果对apk size敏感，建议只使用armeabi-v7a库。）**
 **推荐大家使用融合库！**
 
-## 四、下载集成
+## 4、下载集成
 
 * 推荐直接使用gradle方式集成：
 
@@ -73,11 +83,11 @@ dependencies {
 
 * 或者从oschina镜像下载，国内访问速度更快：https://git.oschina.net/ksvc/KSYLive_Android
 
-## FAQ
+## 5. FAQ
 
 已知的问题可参见[FAQ](https://github.com/ksvc/KSYLive_Android/wiki/FAQ)
 
-## 反馈与建议
+## 6. 反馈与建议
 - 主页：[金山云](http://v.ksyun.com)
 - 邮箱：<zengfanping@kingsoft.com>
 - QQ讨论群：574179720
