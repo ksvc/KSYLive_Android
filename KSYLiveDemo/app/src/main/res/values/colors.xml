@@ -26,7 +26,7 @@
     <color name="g_more_dlg_bg">#e5353942</color>
     <color name="addMore_bg_color">#F0F0F0</color>
     <color name="load_more_button_blue">#336666</color>
-    <color name="divider_color">#FFAFB6B5</color>
+    <color name="divider_color">#77AFB6B5</color>
 
     <!-- 背景色 -->
     <color name="at_message_unread">#f7f3ec</color>

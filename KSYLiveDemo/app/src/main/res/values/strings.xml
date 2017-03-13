@@ -62,5 +62,12 @@
     <string name="audio_only">音频推流</string>
     <string name="front_mirror">前置镜像</string>
 
+    <string name="live_type">播放:</string>
+    <string name="type_vod">点播</string>
+    <string name="type_live">直播</string>
+    <string name="bftime_text">BufferTime:</string>
+    <string name="bfsize_text">BufferSize:</string>
+    <string name="text_setting">设置</string>
+
 
 </resources>
