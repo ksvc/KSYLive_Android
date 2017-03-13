@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ksyun.live.demo.R;
@@ -19,6 +20,7 @@ import com.ksyun.live.demo.player.model.GetList;
 import com.ksyun.live.demo.player.util.Settings;
 import com.ksyun.live.demo.player.util.Video;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -26,13 +28,16 @@ public class LocalFragment extends android.app.Fragment implements SwipeRefreshL
 
     private static final int UPDATE = 1;
     private ListView listView;
-    private JieVideoListViewAdapter madapter;
-    private ArrayList<Video> showlistVideos;
+    private JieVideoListViewAdapter mAdapter;
+    private ArrayList<Video> showListVideos;
     private SwipeRefreshLayout swipeLayout;
     public static Handler mHandler;
     private GetList getList;
-    private boolean updateok = false;
+    private boolean isUpdate = false;
     private SharedPreferences settings;
+    private File currentFile;
+
+    private TextView localPath;
 
     public LocalFragment() {
         // Required empty public constructor
@@ -48,35 +53,34 @@ public class LocalFragment extends android.app.Fragment implements SwipeRefreshL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        showlistVideos = new ArrayList<Video>();
+        showListVideos = new ArrayList<Video>();
         getList = new GetList();
-        mHandler = new Handler(){
+        mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                switch(msg.what){
+                switch (msg.what) {
                     case UPDATE:
-                        if(updateok){
-                            updateList();
+                        if (isUpdate) {
+                            updatelist();
                             swipeLayout.setRefreshing(false);
-                            Toast.makeText(getActivity(), "更新成功", Toast.LENGTH_SHORT).show();
-                        }else{
+                        } else {
                             swipeLayout.setRefreshing(false);
                             Toast.makeText(getActivity(), "更新失败,请等待加载完毕", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
-                        if(msg.obj instanceof ArrayList) {
-                            showlistVideos.clear();
-                            showlistVideos.addAll((ArrayList<Video>)msg.obj);
-                            updateList();
+                        if (msg.obj instanceof ArrayList) {
+                            showListVideos.clear();
+                            showListVideos.addAll((ArrayList<Video>) msg.obj);
+                            updatelist();
                         }
                         break;
                     case 3:
-                        if(msg.obj instanceof ArrayList) {
-                            updateok = true;
-                            showlistVideos.clear();
-                            showlistVideos.addAll((ArrayList<Video>)msg.obj);
+                        if (msg.obj instanceof ArrayList) {
+                            isUpdate = true;
+                            showListVideos.clear();
+                            showListVideos.addAll((ArrayList<Video>) msg.obj);
                         }
                 }
             }
@@ -85,47 +89,48 @@ public class LocalFragment extends android.app.Fragment implements SwipeRefreshL
         View view = inflater.inflate(R.layout.fragment_local, container, false);
 
         swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
-        listView = (ListView)view.findViewById(R.id.list_local_frag);
+        listView = (ListView) view.findViewById(R.id.list_local_frag);
+        localPath = (TextView) view.findViewById(R.id.local_path);
         swipeLayout.setOnRefreshListener(this);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Video v = showlistVideos.get(position);
-
-                String chooseview;
-                chooseview = settings.getString("choose_view","undefind");
-               if(chooseview.equals(Settings.USEKSYTEXTURE)){
-                    Intent intent = new Intent(getActivity(),TextureVideoActivity.class);
-                    intent.putExtra("path",v.getPath());
-                    startActivity(intent);
-               }
-               else if (chooseview.equals(Settings.USEKGLRENDER)){
-                   Intent intent = new Intent(getActivity(),TextureViewMediaActivity.class);
-                   intent.putExtra("path",v.getPath());
-                   startActivity(intent);
-               }
-               else if (chooseview.equals(Settings.USEKSYVIVEW)){
-                   Intent intent = new Intent(getActivity(),KSYSurfaceActivity.class);
-                   intent.putExtra("path",v.getPath());
-                   startActivity(intent);
-               }
-               else{
-                    Intent intent = new Intent(getActivity(), SurfaceActivity.class);
-                    intent.putExtra("path",v.getPath());
-                    startActivity(intent);
+                Video v = showListVideos.get(position);
+                File file = new File(v.getPath());
+                if (file.isDirectory()) {
+                    showListVideos.clear();
+                    getList.getFileList(showListVideos, file);
+                    currentFile = file;
+                    localPath.setText(currentFile.getAbsolutePath());
+                    Message msg = new Message();
+                    msg.what = UPDATE;
+                    mHandler.sendMessageDelayed(msg, 500);
+                } else {
+                    String playerType = settings.getString("choose_type", Settings.LIVE);
+                    if (playerType.equals(Settings.VOD)) {
+                        Intent intent = new Intent(getActivity(), TextureVodActivity.class);
+                        intent.putExtra("path", v.getPath());
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(getActivity(), TextureVideoActivity.class);
+                        intent.putExtra("path", v.getPath());
+                        startActivity(intent);
+                    }
                 }
             }
         });
-
-        getList.startThread(showlistVideos, Environment.getExternalStorageDirectory());
+        getList.getFileList(showListVideos, Environment.getExternalStorageDirectory());
+        currentFile = Environment.getExternalStorageDirectory();
+        localPath.setText(currentFile.getAbsolutePath());
         return view;
     }
-    public void updateList(){
-        madapter = new JieVideoListViewAdapter(getActivity(),showlistVideos);
-        listView.setAdapter(madapter);
+
+    public void updatelist() {
+        mAdapter = new JieVideoListViewAdapter(getActivity(), showListVideos);
+        listView.setAdapter(mAdapter);
     }
 
-    public void setSettings( SharedPreferences set){
+    public void setSettings(SharedPreferences set) {
         settings = set;
     }
 
@@ -133,7 +138,20 @@ public class LocalFragment extends android.app.Fragment implements SwipeRefreshL
     public void onRefresh() {
         Message msg = new Message();
         msg.what = UPDATE;
-        mHandler.sendMessageDelayed(msg,3000);
+        mHandler.sendMessageDelayed(msg, 3000);
+    }
+
+    public void onBackPressed() {
+        if (currentFile.getAbsolutePath().equals(Environment.getExternalStorageDirectory().getAbsolutePath())) {
+            getActivity().finish();
+        } else {
+            showListVideos.clear();
+            getList.getFileList(showListVideos, currentFile.getParentFile());
+            currentFile = currentFile.getParentFile();
+            localPath.setText(currentFile.getAbsolutePath());
+            Message msg = new Message();
+            msg.what = UPDATE;
+            mHandler.sendMessageDelayed(msg, 500);
+        }
     }
 }
-

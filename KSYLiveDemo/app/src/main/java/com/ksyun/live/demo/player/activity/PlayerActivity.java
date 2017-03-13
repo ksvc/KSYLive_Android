@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,18 +21,25 @@ import android.widget.Toast;
 
 import com.ksyun.live.demo.R;
 
-public class PlayerActivity extends AppCompatActivity implements View.OnClickListener{
+public class PlayerActivity extends AppCompatActivity implements View.OnClickListener {
     private LocalFragment localFragment;
-    private Button media_net;
-    private Button media_setting;
-    private Button media_history;
+
+    private final static int SETTINGREQUEST = 0;
+
+    private Button mediaNet;
+    private Button mediaSetting;
+    private Button mediaHistory;
+
+    private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        settings = getSharedPreferences("SETTINGS", Context.MODE_PRIVATE);
         setContentView(R.layout.activity_player);
 
-        setActionBarLayout(R.layout.media_actionbar,this);
+        setActionBarLayout(R.layout.media_actionbar, this);
 
         permissionCheck();
 
@@ -70,13 +78,13 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(
                     android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT, android.support.v7.app.ActionBar.LayoutParams.MATCH_PARENT);
             actionBar.setCustomView(v, layout);
-            media_net = (Button)findViewById(R.id.media_network);
-            media_history = (Button)findViewById(R.id.media_history);
-            media_setting = (Button)findViewById(R.id.media_setting);
-            media_net.setOnClickListener(this);
-            media_setting.setOnClickListener(this);
-            media_history.setOnClickListener(this);
-        }else{
+            mediaNet = (Button) findViewById(R.id.media_network);
+            mediaHistory = (Button) findViewById(R.id.media_history);
+            mediaSetting = (Button) findViewById(R.id.media_setting);
+            mediaNet.setOnClickListener(this);
+            mediaSetting.setOnClickListener(this);
+            mediaHistory.setOnClickListener(this);
+        } else {
             Toast.makeText(PlayerActivity.this, "ActionBar不存在", Toast.LENGTH_SHORT).show();
         }
 
@@ -88,31 +96,50 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         FragmentTransaction transaction = fm.beginTransaction();
         localFragment = new LocalFragment();
         localFragment.setSettings(getSharedPreferences("SETTINGS", Context.MODE_PRIVATE));
-        transaction.replace(R.id.contentFrame,localFragment);
+        transaction.replace(R.id.contentFrame, localFragment);
         transaction.commit();
     }
 
     @Override
     public void onClick(View view) {
         Intent intent;
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.media_network:
-                Toast.makeText(PlayerActivity.this, "media_net", Toast.LENGTH_SHORT).show();
-                intent = new Intent(PlayerActivity.this,NetMediaActivty.class);
+                Toast.makeText(PlayerActivity.this, "mediaNet", Toast.LENGTH_SHORT).show();
+                intent = new Intent(PlayerActivity.this, NetMediaActivty.class);
                 startActivity(intent);
                 break;
             case R.id.media_history:
-                Intent intent2 = new Intent(this,HistoryActivity.class);
+                Intent intent2 = new Intent(this, HistoryActivity.class);
                 startActivity(intent2);
-                Toast.makeText(PlayerActivity.this, "media_history", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlayerActivity.this, "mediaHistory", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.media_setting:
-                intent = new Intent(this,SettingActivity.class);
-                startActivity(intent);
-                Toast.makeText(PlayerActivity.this, "media_setting", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, SettingActivity.class);
+                startActivityForResult(intent,SETTINGREQUEST);
+                Toast.makeText(PlayerActivity.this, "mediaSetting", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case SETTINGREQUEST:
+                if (resultCode==1){
+                    PlayerActivity.this.recreate();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        localFragment.onBackPressed();
     }
 }
