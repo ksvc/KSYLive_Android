@@ -20,7 +20,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 
 ### 1.1 运行环境
 - 最低支持版本为Android 4.0 (API level 15)
-- 支持的cpu架构：armv7, arm64, x86
+- 支持的cpu架构：[armv5](https://github.com/ksvc/KSYLive_Android/releases/tag/v2.2.6)，armv7, arm64, x86，
 
 
 ### 1.2 关于费用
