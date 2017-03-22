@@ -26,6 +26,8 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
     private RadioButton radioHard;
     private RadioButton radioLive;
     private RadioButton radioVod;
+    private RadioButton radioFloating;
+    private RadioButton radioRecord;
     private Switch debugSwitch;
 
 //    private Spinner mSpinner;
@@ -125,6 +127,8 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
 
         radioLive = (RadioButton) findViewById(R.id.type_live);
         radioVod = (RadioButton) findViewById(R.id.type_vod);
+        radioFloating = (RadioButton) findViewById(R.id.type_floating);
+        radioRecord = (RadioButton) findViewById(R.id.type_record);
 
         mBufferSize.setText(bufferSize);
         mBufferTime.setText(bufferTime);
@@ -161,6 +165,12 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
             case Settings.LIVE:
                 mChooseType.check(radioLive.getId());
                 break;
+            case Settings.FLOATING:
+                mChooseType.check(radioFloating.getId());
+                break;
+            case Settings.RECORD:
+                mChooseType.check(radioRecord.getId());
+                break;
             default:
                 mChooseType.check(radioLive.getId());
                 editor.putString("choose_type", Settings.LIVE);
@@ -184,6 +194,12 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
                 break;
             case R.id.type_live:
                 editor.putString("choose_type", Settings.LIVE);
+                break;
+            case R.id.type_floating:
+                editor.putString("choose_type", Settings.FLOATING);
+                break;
+            case R.id.type_record:
+                editor.putString("choose_type", Settings.RECORD);
                 break;
             default:
                 break;

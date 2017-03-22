@@ -11,4 +11,6 @@ public class Settings {
 
     public static final String VOD = "vod";
     public static final String LIVE = "live";
+    public static final String FLOATING = "floating";
+    public static final String RECORD = "record";
 }

@@ -83,8 +83,17 @@ public class NetMediaActivty extends AppCompatActivity implements View.OnClickLi
                     Intent intent = new Intent(NetMediaActivty.this, TextureVodActivity.class);
                     intent.putExtra("path", path);
                     startActivity(intent);
-                } else {
+                } else if (playerType.equals(Settings.LIVE)){
                     Intent intent = new Intent(NetMediaActivty.this, TextureVideoActivity.class);
+                    intent.putExtra("path", path);
+                    startActivity(intent);
+
+                } else if (playerType.equals(Settings.FLOATING)){
+                    Intent intent = new Intent(NetMediaActivty.this, FloatingVideoActivity.class);
+                    intent.putExtra("path", path);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(NetMediaActivty.this, PlayRecordActivity.class);
                     intent.putExtra("path", path);
                     startActivity(intent);
                 }

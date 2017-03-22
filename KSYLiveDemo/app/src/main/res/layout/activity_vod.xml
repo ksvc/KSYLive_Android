@@ -149,18 +149,6 @@
         android:layout_alignParentRight="true"
         android:visibility="gone">
 
-        <Button
-            android:id="@+id/record"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="录制"
-            android:textSize="18sp"
-            android:textColor="#ffffffff"
-            android:layout_above="@+id/player_screen"
-            android:layout_alignParentRight="true"
-            android:background="#00000000"
-            />
-
         <ImageView
             android:id="@+id/player_screen"
             android:layout_width="35dp"
@@ -238,7 +226,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/qyvideo_start_btn" />
+                android:background="@drawable/ksy_playing_btn" />
 
             <ImageView
                 android:id="@+id/player_reload"
