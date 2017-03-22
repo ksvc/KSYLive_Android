@@ -16,6 +16,7 @@ import com.ksyun.media.streamer.encoder.VideoEncodeFormat;
 import com.ksyun.media.streamer.filter.audio.AudioResampleFilter;
 import com.ksyun.media.streamer.framework.AVConst;
 import com.ksyun.media.streamer.framework.AudioBufFormat;
+import com.ksyun.media.streamer.framework.ImgBufFormat;
 import com.ksyun.media.streamer.kit.StreamerConstants;
 import com.ksyun.media.streamer.logstats.StatsLogReport;
 import com.ksyun.media.streamer.publisher.FilePublisher;
@@ -30,21 +31,13 @@ public class KSYPlayerRecord {
     private static final String TAG = "KSYPlayerRecord";
 
     private Context mContext;
-
-    private String mUri;
-
     private int mScreenRenderWidth = 0;
     private int mScreenRenderHeight = 0;
-    private int mPreviewResolution = StreamerConstants.VIDEO_RESOLUTION_360P;
-    private int mPreviewWidth = 0;
-    private int mPreviewHeight = 0;
-    private float mPreviewFps = 0;
     private int mTargetResolution = StreamerConstants.VIDEO_RESOLUTION_360P;
     private int mTargetWidth = 0;
     private int mTargetHeight = 0;
     private float mTargetFps = 0;
     private float mIFrameInterval = 3.0f;
-    private int mRotateDegrees = 0;
     private int mVideoCodecId = AVConst.CODEC_ID_AVC;
 
     private int mMaxVideoBitrate = 800 * 1000;
@@ -69,12 +62,9 @@ public class KSYPlayerRecord {
 
     private FilePublisher mFilePublisher;
 
-    private GLRender mGLRender;
-
     private AVCodecVideoEncoder mVideoEncoder;
     private AudioEncoderMgt mAudioEncoderMgt;
     private AudioResampleFilter mAudioResampleFilter;
-    private PublisherMgt mPublisherMgt;
     private PlayerCapture mPlayerCapture;
 
     private Handler mMainHandler;
@@ -89,10 +79,7 @@ public class KSYPlayerRecord {
         initModules();
     }
 
-
     private void initModules() {
-
-        mGLRender = new GLRender();
 
         mPlayerCapture = new PlayerCapture(mContext);
         mAudioResampleFilter = new AudioResampleFilter();
@@ -103,14 +90,11 @@ public class KSYPlayerRecord {
 
         mPlayerCapture.getAudioSrcPin().connect(mAudioResampleFilter.getSinkPin());
         mAudioResampleFilter.getSrcPin().connect(mAudioEncoderMgt.getSinkPin());
-//        mPlayerCapture.getAudioSrcPin().connect(mAudioEncoderMgt.getSinkPin());
         mPlayerCapture.getVideoSrcPin().connect(mVideoEncoder.mSinkPin);
 
-        mPublisherMgt = new PublisherMgt();
         mFilePublisher = new FilePublisher();
         mAudioEncoderMgt.getSrcPin().connect(mFilePublisher.getAudioSink());
         mVideoEncoder.mSrcPin.connect(mFilePublisher.getVideoSink());
-        mPublisherMgt.addPublisher(mFilePublisher);
 
         // set listeners
 
@@ -208,71 +192,12 @@ public class KSYPlayerRecord {
         });
     }
 
-    public GLRender getGLRender() {
-        return mGLRender;
-    }
-
     public AVCodecVideoEncoder getVideoEncoderMgt() {
         return mVideoEncoder;
     }
 
     public AudioEncoderMgt getAudioEncoderMgt() {
         return mAudioEncoderMgt;
-    }
-
-    public void setUrl(String url) throws IllegalArgumentException {
-        if (TextUtils.isEmpty(url)) {
-            throw new IllegalArgumentException("url can not be null");
-        }
-        mUri = url;
-    }
-
-    public void updateUrl(String url) {
-        setUrl(url);
-    }
-
-    public String getUrl() {
-        return mUri;
-    }
-
-
-    public void setRotateDegrees(int degrees) throws IllegalArgumentException {
-        degrees %= 360;
-        if (degrees % 90 != 0) {
-            throw new IllegalArgumentException("Invalid rotate degrees");
-        }
-        if (mRotateDegrees == degrees) {
-            return;
-        }
-        boolean isLastLandscape = (mRotateDegrees % 180) != 0;
-        boolean isLandscape = (degrees % 180) != 0;
-        if (isLastLandscape != isLandscape) {
-            if (mPreviewWidth > 0 || mPreviewHeight > 0) {
-                setPreviewResolution(mPreviewHeight, mPreviewWidth);
-            }
-            if (mTargetWidth > 0 || mTargetHeight > 0) {
-                setTargetResolution(mTargetHeight, mTargetWidth);
-            }
-        }
-        mRotateDegrees = degrees;
-    }
-
-    public int getRotateDegrees() {
-        return mRotateDegrees;
-    }
-
-
-
-    public void setPreviewResolution(int width, int height) throws IllegalArgumentException {
-        if (width < 0 || height < 0 || (width == 0 && height == 0)) {
-            throw new IllegalArgumentException("Invalid resolution");
-        }
-        mPreviewWidth = width;
-        mPreviewHeight = height;
-
-        if (mScreenRenderWidth != 0 && mScreenRenderHeight != 0) {
-            calResolution();
-        }
     }
 
     public void setTargetResolution(int width, int height) throws IllegalArgumentException {
@@ -284,19 +209,10 @@ public class KSYPlayerRecord {
 
         if (mScreenRenderWidth != 0 && mScreenRenderHeight != 0) {
             calResolution();
-//            mVideoEncoder.setImgBufTargetSize(mTargetWidth, mTargetHeight);
         }
     }
 
     private void calResolution() {
-        if (mPreviewWidth == 0 && mPreviewHeight == 0) {
-            int val = getShortEdgeLength(mPreviewResolution);
-            if (mScreenRenderWidth > mScreenRenderHeight) {
-                mPreviewHeight = val;
-            } else {
-                mPreviewWidth = val;
-            }
-        }
         if (mTargetWidth == 0 && mTargetHeight == 0) {
             int val = getShortEdgeLength(mTargetResolution);
             if (mScreenRenderWidth > mScreenRenderHeight) {
@@ -306,14 +222,6 @@ public class KSYPlayerRecord {
             }
         }
 
-        if (mPreviewWidth == 0) {
-            mPreviewWidth = mPreviewHeight * mScreenRenderWidth / mScreenRenderHeight;
-        } else if (mPreviewHeight == 0) {
-            Log.e(TAG,"mPreviewWidth"+mPreviewWidth+"   "+"mScreenRenderHeight"+mScreenRenderHeight+"   "+ "mScreenRenderWidth "+mScreenRenderWidth);
-            mPreviewHeight = mPreviewWidth * mScreenRenderHeight / mScreenRenderWidth;
-        }
-        mPreviewWidth = align(mPreviewWidth, 8);
-        mPreviewHeight = align(mPreviewHeight, 8);
         if (mTargetWidth == 0) {
             mTargetWidth = mTargetHeight * mScreenRenderWidth / mScreenRenderHeight;
         } else if (mTargetHeight == 0) {
@@ -400,6 +308,7 @@ public class KSYPlayerRecord {
         videoEncodeFormat.setIframeinterval(mIFrameInterval);
         videoEncodeFormat.setScene(mEncodeScene);
         videoEncodeFormat.setProfile(mEncodeProfile);
+        videoEncodeFormat.setPixFmt(ImgBufFormat.FMT_YV12);
         mVideoEncoder.configure(videoEncodeFormat);
 
         AudioEncodeFormat audioEncodeFormat = new AudioEncodeFormat(AudioEncodeFormat.MIME_AAC,
@@ -420,10 +329,6 @@ public class KSYPlayerRecord {
         mAudioEncoderMgt.setEncodeMethod(encodeMethod);
     }
 
-    public int getAudioEncodeMethod() {
-        return mAudioEncoderMgt.getEncodeMethod();
-    }
-
     public void setVideoEncodeMethod(int encodeMethod) throws IllegalStateException {
         if (mIsRecording) {
             throw new IllegalStateException("Cannot set encode method while recording");
@@ -431,18 +336,12 @@ public class KSYPlayerRecord {
 //        mVideoEncoder.setEncodeMethod(encodeMethod);
     }
 
-//    public int getVideoEncodeMethod() {
-//        return mVideoEncoder.getEncodeMethod();
-//    }
 
     public void setTargetFps(float fps) throws IllegalArgumentException {
         if (fps <= 0) {
             throw new IllegalArgumentException("the fps must > 0");
         }
         mTargetFps = fps;
-        if (mPreviewFps == 0) {
-            mPreviewFps = mTargetFps;
-        }
     }
 
     public float getTargetFps() {
@@ -564,7 +463,6 @@ public class KSYPlayerRecord {
 
     public void onResume() {
         Log.d(TAG, "onResume");
-        mGLRender.onResume();
         if (mIsRecording && !mIsAudioOnly) {
             getVideoEncoderMgt().stopRepeatLastFrame();
         }
@@ -572,7 +470,6 @@ public class KSYPlayerRecord {
 
     public void onPause() {
         Log.d(TAG, "onPause");
-        mGLRender.onPause();
         if (mIsRecording && !mIsAudioOnly) {
             getVideoEncoderMgt().startRepeatLastFrame();
         }
@@ -606,7 +503,6 @@ public class KSYPlayerRecord {
             mMainHandler = null;
         }
         mPlayerCapture.release();
-        mGLRender.release();
         setOnLogEventListener(null);
     }
 

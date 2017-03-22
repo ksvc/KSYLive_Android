@@ -37,7 +37,7 @@ public class PlayerCapture implements KSYMediaPlayer.OnVideoRawDataListener, KSY
     private ByteBuffer mAudioBuffer;
     private ByteBuffer mVideoBuffer;
     private ImgBufFormat mVideoFormat;
-
+    private ByteBuffer mVideoOutBuffer;
     private int frameNum = 0;
     private long audioBufferSize = 0;
     private boolean gotFirstAudioBuffer = false;
@@ -81,31 +81,19 @@ public class PlayerCapture implements KSYMediaPlayer.OnVideoRawDataListener, KSY
         if (mStarted) {
 
             if (mVideoFormat == null) {
-                mVideoFormat = new ImgBufFormat(ImgBufFormat.FMT_I420, width, height, 0);
+                mVideoFormat = new ImgBufFormat(ImgBufFormat.FMT_YV12, width, height, 0);
                 mVideoSrcPin.onFormatChanged(mVideoFormat);
             }
 
-            ByteBuffer i420Buffer = ByteBuffer.wrap(bytes);
-            ByteBuffer yuvBuffer = ByteBuffer.allocateDirect(size / 2);
-
-            if (yuvBuffer == null ||
-                    bytes == null) {
-                return;
+            if (mVideoOutBuffer == null || mVideoOutBuffer.capacity() < size) {
+                mVideoOutBuffer = ByteBuffer.allocateDirect(size);
+                mVideoOutBuffer.order(ByteOrder.nativeOrder());
             }
-            if (!i420Buffer.isDirect()) {
-                int len = i420Buffer.limit();
-                if (mVideoBuffer == null || mVideoBuffer.capacity() < len) {
-                    mVideoBuffer = ByteBuffer.allocateDirect(len);
-                    mVideoBuffer.order(ByteOrder.nativeOrder());
-                }
-                mVideoBuffer.clear();
-                mVideoBuffer.put(i420Buffer);
-                mVideoBuffer.flip();
-            }
-            ColorFormatConvert.RGBAToI420(mVideoBuffer, width * 4, width, height, yuvBuffer);
+            mVideoOutBuffer.clear();
+            mVideoOutBuffer.put(bytes, 0, size);
+            mVideoOutBuffer.flip();
 
-            //Log.e("onVideoRawDataAvailable", "pts: " + pts);
-            ImgBufFrame frame = new ImgBufFrame(mVideoFormat, yuvBuffer, pts);
+            ImgBufFrame frame = new ImgBufFrame(mVideoFormat, mVideoOutBuffer, pts);
             if (mVideoSrcPin.isConnected()) {
                 mVideoSrcPin.onFrameAvailable(frame);
             }

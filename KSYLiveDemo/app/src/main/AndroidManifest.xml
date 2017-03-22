@@ -28,6 +28,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -47,7 +49,14 @@
         <activity android:name=".player.activity.TextureVodActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop">
+        </activity>
+
+        <activity android:name=".player.activity.PlayRecordActivity"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop">
+        </activity>
 
         <activity
             android:name="com.ksyun.live.demo.player.activity.TextureVideoActivity"
@@ -58,8 +67,19 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+        <activity android:name=".player.activity.FloatingVideoActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+        <activity android:name=".player.activity.FloatingPlayingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+        <activity android:name=".player.activity.PlayerActivity"
+            android:screenOrientation="portrait"></activity>
 
-        <activity android:name=".player.activity.PlayerActivity" ></activity>
         <activity android:name="com.ksyun.live.demo.player.activity.NetMediaActivty" ></activity>
         <activity android:name="com.ksyun.live.demo.player.activity.SettingActivity"></activity>
         <activity
@@ -80,6 +100,18 @@
         </activity>
         <activity
             android:name="com.ksyun.media.streamer.demo.CameraActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.RiseAnimation">
+        </activity>
+        <activity
+            android:name="com.ksyun.media.streamer.demo.FloatViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.RiseAnimation">
+        </activity>
+        <activity
+            android:name="com.ksyun.media.streamer.demo.FloatViewActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop"
             android:theme="@style/Theme.RiseAnimation">

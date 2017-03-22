@@ -127,10 +127,6 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
 
     private String mDataSource;
 
-    private Button mBtnRecord;
-    private boolean mRecording = false;
-    private KSYPlayerRecord playerRecord;
-
     private IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer mp) {
@@ -138,14 +134,14 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
             mVideoWidth = mVideoView.getVideoWidth();
             mVideoHeight = mVideoView.getVideoHeight();
 
-            playerRecord.setTargetResolution(mVideoWidth, mVideoHeight);
-
             // Set Video Scaling Mode
             mVideoView.setVideoScalingMode(KSYMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
 
             ByteBuffer rawBuffer[] = new ByteBuffer[5];     //5 buffers is just an example
             for (int index = 0; index < rawBuffer.length; index++) {
-                rawBuffer[index] = ByteBuffer.allocate(mVideoView.getVideoWidth() * mVideoView.getVideoHeight() * 4);
+                int yStride = (mVideoWidth + 15) / 16 * 16;
+                int cStride = ((yStride / 2) + 15) / 16 * 16;
+                rawBuffer[index] = ByteBuffer.allocate(yStride * mVideoHeight + cStride * mVideoHeight);
                 mVideoView.addVideoRawBuffer(rawBuffer[index].array());
             }
 
@@ -470,36 +466,6 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
             Log.e(TAG, "palyer buffersize :" + bufferSize);
         }
 
-        playerRecord = new KSYPlayerRecord(this);
-        playerRecord.setEncodeMethod(StreamerConstants.ENCODE_METHOD_SOFTWARE);
-        playerRecord.setTargetFps(15);
-
-        mBtnRecord = (Button) findViewById(R.id.record);
-        mBtnRecord.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String mRecordUrl = "/storage/emulated/0/playerRecord.mp4";
-                if (playerRecord == null)
-                    return;
-
-                if ( mRecording == false) {
-                    mBtnRecord.setTextColor(getResources().getColor(R.color.player_red));
-                    playerRecord.startRecord(mRecordUrl);
-                    mRecording = true;
-                }
-                else {
-                    mBtnRecord.setTextColor(getResources().getColor(R.color.player_white));
-                    playerRecord.stopRecord();
-                    mRecording = false;
-                }
-            }
-        });
-
-        mVideoView.setOption(KSYMediaPlayer.OPT_CATEGORY_PLAYER, "overlay-format", KSYMediaPlayer.SDL_FCC_RV32);
-
-        mVideoView.setVideoRawDataListener(playerRecord.getPlayerCapture());
-        mVideoView.setOnAudioPCMAvailableListener(playerRecord.getPlayerCapture());
-
         if (chooseDecode.equals(Settings.USEHARD)) {
             useHwCodec = true;
         } else {
@@ -676,15 +642,6 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
     }
 
     private void videoPlayEnd() {
-
-        if (playerRecord != null ) {
-            if (mRecording) {
-                playerRecord.stopRecord();
-            }
-            playerRecord = null;
-            mRecording = false;
-        }
-
         if (mVideoView != null) {
             mVideoView.release();
             mVideoView = null;
@@ -709,11 +666,11 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
             msg.what = HIDDEN_SEEKBAR;
             mHandler.sendMessageDelayed(msg, 3000);
             if (mPause) {
-                mPlayerStartBtn.setBackgroundResource(R.drawable.qyvideo_pause_btn);
+                mPlayerStartBtn.setBackgroundResource(R.drawable.ksy_pause_btn);
                 mVideoView.pause();
                 mPauseStartTime = System.currentTimeMillis();
             } else {
-                mPlayerStartBtn.setBackgroundResource(R.drawable.qyvideo_start_btn);
+                mPlayerStartBtn.setBackgroundResource(R.drawable.ksy_playing_btn);
                 mVideoView.start();
                 mPausedTime += System.currentTimeMillis() - mPauseStartTime;
                 mPauseStartTime = 0;

@@ -184,7 +184,7 @@
             android:id="@+id/player_start"
             android:layout_width="@dimen/player_panel_start_btn"
             android:layout_height="@dimen/player_panel_start_btn"
-            android:background="@drawable/qyvideo_start_btn"/>
+            android:background="@drawable/ksy_playing_btn"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
