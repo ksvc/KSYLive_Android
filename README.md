@@ -56,6 +56,17 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 **这里可以看出，融合库比单纯推流和播放的apk size从14.6M减小了4.5M，到10.1M。（当然，如果不使用三个体系结构的话，并不会到10M大小。如果对apk size敏感，建议只使用armeabi-v7a库。）**
 **推荐大家使用融合库！**
 
+### 3.1 体系结构
+当前[KSYLive_Android][KSYLive_Android]支持以下体系结构:
+* armeabi
+* armeabi-v7a
+* arm64-v8a
+* x86
+
+为了节省apk size，如果没有特殊缘由，请只集成armeabi-v7a版本。
+> 只集成armeabi-v7a版本，会导致ARMv5 ARMv6 设备不能运行。如果APP需要适配这两类设备，需要额外集成armebi版本。
+> ARMv5 ARMv6 设备计算性能较差，金山云不保证该芯片设备上的直播体验。不推荐直播APP视频适配该两款芯片设备。
+
 ## 4、下载集成
 
 * 推荐直接使用gradle方式集成：
@@ -94,3 +105,5 @@ dependencies {
 - Issues: <https://github.com/ksvc/KSYLive_Android/issues>
 
 <a href="http://www.ksyun.com/"><img src="https://raw.githubusercontent.com/wiki/ksvc/KSYLive_Android/images/logo.png" border="0" alt="金山云计算" /></a>
+
+[KSYLive_Android]:https://github.com/ksvc/KSYLive_Android/edit/master/README.md
