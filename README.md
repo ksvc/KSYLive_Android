@@ -1,5 +1,13 @@
 # KSYLive_Android
-## 1. 功能介绍
+## 1. 改善
+
+[金山云直播SDK](https://github.com/ksvc/KSYLive_Android)是金山云提供的直播解决方案的一部分，完成了Android端音视频数据采集、处理、推流和播放的工作，金山云直播SDK**不限制**用户的推流、拉流地址。用户可以只使用金山云直播SDK而不使用金山云的云服务。
+
+金山云直播SDK不收取任何授权使用费用，不含任何失效时间或者远程下发关闭的后门。同时金山云直播SDK也不要求ak/sk等鉴权，没有任何用户标识信息。
+
+金山云直播SDK提供了业内一流的H.265编码、解码能力，免费使用，欢迎试用评估。
+
+### 1.1 功能介绍
 KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移动直播SDK。具体功能：
 * [x]  美颜
 * [x] 美声
@@ -18,12 +26,12 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 具体播放功能请见：
 * [KSYMediaPlayer_Android](https://github.com/ksvc/KSYMediaPlayer_Android)
 
-### 1.1 运行环境
+### 1.2 运行环境
 - 最低支持版本为Android 4.0 (API level 15)
 - 支持的cpu架构：[armv5](https://github.com/ksvc/KSYLive_Android/releases/tag/v2.2.6)，armv7, arm64, x86，
 
 
-### 1.2 关于费用
+### 1.3 关于费用
 金山云SDK保证，提供的[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)可以用于商业应用，不会收取任何SDK使用费用。但是基于[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)的其他商业服务，会由特定供应商收取授权费用，大致包括：
 
 1. 云存储
