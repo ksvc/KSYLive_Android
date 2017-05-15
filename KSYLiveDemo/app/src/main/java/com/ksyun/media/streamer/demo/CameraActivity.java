@@ -127,7 +127,6 @@ public class CameraActivity extends Activity implements
     private boolean mRecording = false;
     private boolean mIsFileRecording = false;
     private boolean mIsFlashOpened = false;
-    private boolean mSwitchOrQuit = false;
     private String mUrl;
     private String mDebugInfo = "";
     private String mBgmPath = "/sdcard/test.mp3";
@@ -525,12 +524,6 @@ public class CameraActivity extends Activity implements
             mOrientationEventListener.disable();
         }
         mStreamer.onPause();
-        if (!mSwitchOrQuit) {
-            // setOffscreenPreview to enable camera capture in background
-            mStreamer.setOffscreenPreview(mStreamer.getPreviewWidth(),
-                    mStreamer.getPreviewHeight());
-        }
-        mSwitchOrQuit = false;
 
         // disable audio low delay in background
         if (mAudioLDCheckBox.isChecked()) {
@@ -889,7 +882,6 @@ public class CameraActivity extends Activity implements
         Intent intent = new Intent(getApplicationContext(), FloatViewActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         KSYGlobalStreamer.setInstance(mStreamer);
-        mSwitchOrQuit = true;
         startActivity(intent);
     }
 
@@ -907,7 +899,6 @@ public class CameraActivity extends Activity implements
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         mChronometer.stop();
-                        mSwitchOrQuit = true;
                         CameraActivity.this.finish();
                     }
                 }).show();
