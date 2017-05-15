@@ -64,9 +64,9 @@ public class FloatViewActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.goods_activity);
         mObserverButton = new ButtonObserver();
-        initSurfaceWindow();
-        addSurfaceWindow();
         mLastRotation = getDisplayRotation();
+        mFloatBack = (ImageView) findViewById(R.id.float_back);
+        mFloatBack.setOnClickListener(mObserverButton);
 
         mOrientationEventListener = new OrientationEventListener(this,
                 SensorManager.SENSOR_DELAY_NORMAL) {
@@ -83,28 +83,20 @@ public class FloatViewActivity extends Activity {
         if (mOrientationEventListener.canDetectOrientation()) {
             mOrientationEventListener.enable();
         }
+
+        addFloatViewWithPermCheck();
     }
 
     @Override
     protected void onResume() {
         Log.d(TAG, "onResume");
         super.onResume();
-        //KSYGlobalStreamer.getInstance().onResume();
-        //6.0 需要检查overlay权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!Settings.canDrawOverlays(this)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, OVERLAY_PERMISSION_RESULT_CODE);
-            }
-        }
     }
 
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause");
         super.onPause();
-        //KSYGlobalStreamer.getInstance().onPause();
     }
 
     @Override
@@ -132,6 +124,7 @@ public class FloatViewActivity extends Activity {
 
     private void onBackoffClick() {
         KSYGlobalStreamer.getInstance().onPause();
+        KSYGlobalStreamer.getInstance().setDisplayPreview((GLSurfaceView) null);
         FloatViewActivity.this.finish();
     }
 
@@ -201,9 +194,6 @@ public class FloatViewActivity extends Activity {
                     onBackoffClick();
                 }
             });
-
-            mFloatBack = (ImageView) findViewById(R.id.float_back);
-            mFloatBack.setOnClickListener(mObserverButton);
 
             mCameraView = new GLSurfaceView(this);
             KSYGlobalStreamer.getInstance().setDisplayPreview(mCameraView);
@@ -277,6 +267,18 @@ public class FloatViewActivity extends Activity {
         return 0;
     }
 
+    private void addFloatViewWithPermCheck() {
+        // 6.0 需要检查overlay权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, OVERLAY_PERMISSION_RESULT_CODE);
+        } else {
+            initSurfaceWindow();
+            addSurfaceWindow();
+        }
+    }
+
     /**
      * 申请overlay权限窗口返回
      *
@@ -292,6 +294,9 @@ public class FloatViewActivity extends Activity {
                     // SYSTEM_ALERT_WINDOW permission not granted...
                     Toast.makeText(FloatViewActivity.this, "SYSTEM_ALERT_WINDOW not granted",
                             Toast.LENGTH_SHORT).show();
+                } else {
+                    initSurfaceWindow();
+                    addSurfaceWindow();
                 }
             }
         }
