@@ -1,15 +1,19 @@
 # KSYLive_Android
-## 1. 改善
+## 1. 概述
 
-[金山云直播SDK](https://github.com/ksvc/KSYLive_Android)是金山云提供的直播解决方案的一部分，完成了Android端音视频数据采集、处理、推流和播放的工作，金山云直播SDK**不限制**用户的推流、拉流地址。用户可以只使用金山云直播SDK而不使用金山云的云服务。
+[金山云直播SDK][KSYLive_Android]是金山云提供的直播解决方案的一部分，完成了Android端音视频数据采集、处理、推流和播放的工作。
 
-金山云直播SDK不收取任何授权使用费用，不含任何失效时间或者远程下发关闭的后门。同时金山云直播SDK也不要求ak/sk等鉴权，没有任何用户标识信息。
+[金山云直播SDK][KSYLive_Android]**不限制**用户的推流、拉流地址。用户可以只使用[金山云直播SDK][KSYLive_Android]而不使用金山云的云服务。
 
-金山云直播SDK提供了业内一流的H.265编码、解码能力，免费使用，欢迎试用评估。
+[金山云直播SDK][KSYLive_Android]不收取任何授权使用费用，不含任何失效时间或者远程下发关闭的后门。同时[金山云直播SDK][KSYLive_Android]也不要求ak/sk等鉴权，没有任何用户标识信息。
+
+[金山云直播SDK][KSYLive_Android]提供了业内一流的H.265编码、解码能力，H.265能力也是**免费使用**，欢迎集成试用。
+
+[金山云直播SDK][KSYLive_Android]当前未提供开源代码，如果需要其他定制化开发功能，请通过[金山云商务渠道][ksyun]联系。
 
 ### 1.1 功能介绍
 KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移动直播SDK。具体功能：
-* [x]  美颜
+* [x] 美颜
 * [x] 美声
 * [x] 连麦互动
 * [x] 动态贴纸  
@@ -32,7 +36,9 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 
 
 ### 1.3 关于费用
-金山云SDK保证，提供的[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)可以用于商业应用，不会收取任何SDK使用费用。但是基于[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)的其他商业服务，会由特定供应商收取授权费用，大致包括：
+金山云SDK保证，提供的[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)可以用于商业应用，不会收取任何SDK使用费用。
+
+但是基于[KSYLive Android直播SDK](https://github.com/ksvc/KSYLive_Android)的其他商业服务，会由特定供应商收取授权费用，大致包括：
 
 1. 云存储
 1. CDN分发
@@ -41,8 +47,8 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 1. 第三方美颜
 
 ## 2. 文档说明
-* KSYMediaPlayer wiki <https://github.com/ksvc/KSYMediaPlayer_Android>
-* KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android>
+* KSYMediaPlayer wiki <https://github.com/ksvc/KSYMediaPlayer_Android>，介绍了如何使用直播播放（观众侧）。
+* KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android>，介绍了如何使用直播推流（主播侧）。
 
 ## 3. 包大小说明
 此说明以加入arm63-v8a X86 armeabi-v7a 三个体系结构为例进行说明
@@ -115,3 +121,4 @@ dependencies {
 <a href="http://www.ksyun.com/"><img src="https://raw.githubusercontent.com/wiki/ksvc/KSYLive_Android/images/logo.png" border="0" alt="金山云计算" /></a>
 
 [KSYLive_Android]:https://github.com/ksvc/KSYLive_Android/edit/master/README.md
+[ksyun]:https://www.ksyun.com/about/aboutcontact
