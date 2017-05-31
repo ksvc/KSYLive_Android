@@ -1,4 +1,7 @@
 # KSYLive_Android
+## 阅读对象
+本文档面向所有使用[金山云播放SDK][KSYLive_Android]的开发、测试人员等, 要求读者具有一定的iOS编程开发经验，并且要求读者具备阅读[wiki][wiki]的习惯。
+
 ## 1. 概述
 
 [金山云直播SDK][KSYLive_Android]是金山云提供的直播解决方案的一部分，完成了Android端音视频数据采集、处理、推流和播放的工作。
@@ -122,3 +125,4 @@ dependencies {
 
 [KSYLive_Android]:https://github.com/ksvc/KSYLive_Android/edit/master/README.md
 [ksyun]:https://www.ksyun.com/about/aboutcontact
+[wiki]:https://github.com/ksvc/KSYLive_Android/wiki
