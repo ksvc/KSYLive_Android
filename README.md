@@ -16,16 +16,19 @@
 
 ### 1.1 功能介绍
 KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移动直播SDK。具体功能：
-* [x] 美颜
-* [x] 美声
-* [x] 连麦互动
-* [x] 动态贴纸  
-* [x] 录屏  
+* [x] [美颜](https://github.com/ksvc/KSYStreamer_Android/wiki/Video_Filter_Inner)
+* [x] [滤镜](https://github.com/ksvc/KSYStreamer_Android/wiki/Video_Filter)
+* [x] [美声](https://github.com/ksvc/KSYStreamer_Android/wiki/Audio_Filter)
+* [x] [背景音乐功能](https://github.com/ksvc/KSYStreamer_Android/wiki/Audio_Mixer)
+* [x] 多种动态贴纸  
+* [x] [录屏](https://github.com/ksvc/KSYDiversityLive_Android/tree/master/KSYScreenStreamer)  
 * [x] 秒开加速
 * [x] 低延时直播
 * [x] 弱网优化
 * [x] 卡顿优化
 * [x] 丰富的软硬编、软硬解支持
+* [x] [悬浮窗推流](https://github.com/ksvc/KSYStreamer_Android/wiki/FloatingView)
+* [x] [短视频编辑](https://github.com/ksvc/KSYMediaEditorKit_Android)
 
 具体推流功能请见：
 * [KSYStreamer_Android](https://github.com/ksvc/KSYStreamer_Android)
@@ -98,12 +101,12 @@ allprojects {
 
 dependencies {
     # required, enough for most devices.
-    compile 'com.ksyun.media:libksylive-java:2.3.0'
-    compile 'com.ksyun.media:libksylive-armv7a:2.3.0'
+    compile 'com.ksyun.media:libksylive-java:2.3.3'
+    compile 'com.ksyun.media:libksylive-armv7a:2.3.3'
 
     # Other ABIs: optional
-    compile 'com.ksyun.media:libksylive-arm64:2.3.0'
-    compile 'com.ksyun.media:libksylive-x86:2.3.0'
+    compile 'com.ksyun.media:libksylive-arm64:2.3.3'
+    compile 'com.ksyun.media:libksylive-x86:2.3.3'
 }
 ```
 
