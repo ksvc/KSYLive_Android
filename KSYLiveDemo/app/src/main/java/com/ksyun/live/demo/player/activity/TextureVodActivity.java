@@ -522,10 +522,12 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
         public void onClick(View v) {
             int mode = mVideoScaleIndex % 2;
             mVideoScaleIndex++;
-            mHandler.removeMessages(HIDDEN_SEEKBAR);
-            Message msg = new Message();
-            msg.what = HIDDEN_SEEKBAR;
-            mHandler.sendMessageDelayed(msg, 3000);
+            if (mHandler != null) {
+                mHandler.removeMessages(HIDDEN_SEEKBAR);
+                Message msg = new Message();
+                msg.what = HIDDEN_SEEKBAR;
+                mHandler.sendMessageDelayed(msg, 3000);
+            }
             if (mVideoView != null) {
                 if (mode == 1) {
                     mVideoView.setVideoScalingMode(KSYMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
@@ -593,11 +595,13 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
             Toast.makeText(mContext, "可双指缩放画面,单指移动画面",Toast.LENGTH_SHORT).show();
             Message msg = new Message();
             msg.what = HIDDEN_SEEKBAR;
-            mHandler.sendMessageDelayed(msg, 3000);
+            if (mHandler != null)
+                mHandler.sendMessageDelayed(msg, 3000);
         } else {
             mPlayerPanel.setVisibility(View.GONE);
             topPanel.setVisibility(View.GONE);
-            mHandler.removeMessages(HIDDEN_SEEKBAR);
+            if (mHandler != null)
+                mHandler.removeMessages(HIDDEN_SEEKBAR);
         }
     }
 
@@ -666,6 +670,7 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
             mQosThread = null;
         }
 
+        mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
 
         finish();
@@ -701,7 +706,8 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
                 mHandler.removeMessages(HIDDEN_SEEKBAR);
                 Message msg = new Message();
                 msg.what = HIDDEN_SEEKBAR;
-                mHandler.sendMessageDelayed(msg, 3000);
+                if (mHandler != null)
+                    mHandler.sendMessageDelayed(msg, 3000);
             }
         }
 
@@ -712,7 +718,8 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            mVideoView.seekTo(mVideoProgress);
+            if (mVideoView != null)
+                mVideoView.seekTo(mVideoProgress);
             setVideoProgress(mVideoProgress);
         }
     };

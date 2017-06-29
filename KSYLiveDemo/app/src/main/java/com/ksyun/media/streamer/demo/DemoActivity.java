@@ -161,7 +161,11 @@ public class DemoActivity extends Activity
     private void updateUI() {
         if (mHWButton.isChecked() || mEncodeWithH265.isChecked()) {
             setEnableRadioGroup(mSceneGroup, false);
-            setEnableRadioGroup(mProfileGroup, false);
+            if (mEncodeWithH265.isChecked()) {
+                setEnableRadioGroup(mProfileGroup, false);
+            } else {
+                setEnableRadioGroup(mProfileGroup, true);
+            }
         } else {
             setEnableRadioGroup(mSceneGroup, true);
             setEnableRadioGroup(mProfileGroup, true);
