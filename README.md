@@ -28,6 +28,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 * [x] 卡顿优化
 * [x] 丰富的软硬编、软硬解支持
 * [x] [悬浮窗推流](https://github.com/ksvc/KSYStreamer_Android/wiki/FloatingView)
+* [x] [画笔推流(View合成推流)](https://github.com/ksvc/KSYStreamer_Android/wiki/View_Streaming)(new)
 * [x] [短视频编辑](https://github.com/ksvc/KSYMediaEditorKit_Android)
 
 具体推流功能请见：
