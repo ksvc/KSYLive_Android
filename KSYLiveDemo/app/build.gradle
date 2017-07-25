@@ -24,6 +24,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.lht:paintview:1.16'
+    compile 'com.facebook.fresco:fresco:1.4.0'
+    compile 'com.facebook.fresco:animated-gif:1.4.0'
+    compile 'com.facebook.fresco:animated-webp:1.4.0'
     compile project(':libksylive')
     compile files('libs/zxing.jar')
 }
