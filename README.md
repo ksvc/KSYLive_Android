@@ -34,7 +34,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 * [x] 卡顿优化
 * [x] 丰富的软硬编、软硬解支持
 * [x] [悬浮窗推流](https://github.com/ksvc/KSYStreamer_Android/wiki/FloatingView)
-* [x] [画笔推流(View合成推流)](https://github.com/ksvc/KSYStreamer_Android/wiki/View_Streaming)(new)
+* [x] [画笔推流(android.view.View合成推流)](https://github.com/ksvc/KSYStreamer_Android/wiki/View_Streaming)(new)
 * [x] [短视频编辑](https://github.com/ksvc/KSYMediaEditorKit_Android)
 * [x] [音频升降调](https://github.com/ksvc/KSYStreamer_Android/wiki/Audio_Filter)(new)
 * [x] [音频降噪](https://github.com/ksvc/KSYStreamer_Android/wiki/Audio_NoiseSuppression)(new)
@@ -47,7 +47,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 
 ### 1.2 运行环境
 - 最低支持版本为Android 4.0 (API level 15)
-- 支持的cpu架构：[armv5](https://github.com/ksvc/KSYLive_Android/releases/tag/v2.2.6)，armv7, arm64, x86，
+- 支持的CPU架构：[armv5](https://github.com/ksvc/KSYLive_Android/releases/tag/v2.2.6)，armv7, arm64, x86，
 
 
 ### 1.3 关于费用
@@ -66,7 +66,7 @@ KSYLive库融合了Android 播放和推流SDK。旨在提供业内一流的移�
 * KSYStreamer wiki <https://github.com/ksvc/KSYStreamer_Android>，介绍了如何使用直播推流（主播侧）。
 
 ## 3. 包大小说明
-此说明以加入arm63-v8a X86 armeabi-v7a 三个体系结构为例进行说明
+此说明以加入arm64-v8a X86 armeabi-v7a 三个体系结构为例进行说明
 
 注明：
 * lib 为项目动态库so的大小
