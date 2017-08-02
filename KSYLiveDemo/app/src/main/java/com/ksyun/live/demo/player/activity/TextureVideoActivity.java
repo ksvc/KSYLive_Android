@@ -718,6 +718,10 @@ public class TextureVideoActivity extends Activity implements View.OnClickListen
         if (!appDir.exists()) {
             appDir.mkdir();
         }
+
+        if (bitmap == null)
+            return;
+        
         String fileName = System.currentTimeMillis() + ".jpg";
         File file = new File(appDir, fileName);
         try {

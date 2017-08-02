@@ -104,7 +104,7 @@ public class MyVideoThumbLoader {
     {
         Bitmap bitmap = null;
         KSYProbeMediaInfo mediaInfo = new KSYProbeMediaInfo();
-        bitmap = mediaInfo.getVideoThumbnailAtTime(filePath, 5*1000, 352, 0);
+        bitmap = mediaInfo.getVideoThumbnailAtTime(filePath, 5*1000, 352, 0, false);
 
         return bitmap;
     }
