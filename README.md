@@ -1,4 +1,7 @@
 # KSYLive_Android
+
+[ ![Download](https://api.bintray.com/packages/ksvc/ksylive/libksylive-java/images/download.svg) ](https://bintray.com/ksvc/ksylive/libksylive-java/_latestVersion)
+
 ## 阅读对象
 本文档面向所有使用[金山云直播SDK][KSYLive_Android]的开发、测试人员等, 要求读者具有一定的Android编程开发经验，并且要求读者具备阅读[wiki][wiki]的习惯。
 
