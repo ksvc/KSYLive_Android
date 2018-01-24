@@ -13,4 +13,5 @@ public class Settings {
     public static final String LIVE = "live";
     public static final String FLOATING = "floating";
     public static final String RECORD = "record";
+    public static final String MULTIPLE_PLAYER = "multiple_player";
 }

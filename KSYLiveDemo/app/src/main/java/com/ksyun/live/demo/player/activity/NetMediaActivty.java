@@ -92,7 +92,11 @@ public class NetMediaActivty extends AppCompatActivity implements View.OnClickLi
                     Intent intent = new Intent(NetMediaActivty.this, FloatingVideoActivity.class);
                     intent.putExtra("path", path);
                     startActivity(intent);
-                } else {
+                } else if (playerType.equals(Settings.MULTIPLE_PLAYER)){
+                    Intent intent = new Intent(NetMediaActivty.this, MultiplePlayerActivity.class);
+                    intent.putExtra("path", path);
+                    startActivity(intent);
+                }else {
                     Intent intent = new Intent(NetMediaActivty.this, PlayRecordActivity.class);
                     intent.putExtra("path", path);
                     startActivity(intent);
