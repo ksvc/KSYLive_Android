@@ -139,94 +139,97 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
     private double lastSpan;
     private boolean mTouching;
 
+    private void InitView(){
+        if (mVideoView == null)
+            return;
+        mVideoWidth = mVideoView.getVideoWidth();
+        mVideoHeight = mVideoView.getVideoHeight();
+        // Set Video Scaling Mode
+        mVideoView.setVideoScalingMode(KSYMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
+
+//        ByteBuffer rawBuffer[] = new ByteBuffer[5];     //5 buffers is just an example
+//        for (int index = 0; index < rawBuffer.length; index++) {
+//            int yStride = (mVideoWidth + 15) / 16 * 16;
+//            int cStride = ((yStride / 2) + 15) / 16 * 16;
+//            rawBuffer[index] = ByteBuffer.allocate(yStride * mVideoHeight + cStride * mVideoHeight);
+//            mVideoView.addVideoRawBuffer(rawBuffer[index].array());
+//        }
+
+        //start player
+        mVideoView.start();
+
+        //set progress
+        setVideoProgress(0);
+
+        if (mQosThread != null && !mQosThread.isAlive())
+            mQosThread.start();
+
+        if (mVideoView.getServerAddress() != null)
+            mServerIp.setText("ServerIP: " + mVideoView.getServerAddress());
+
+        //  get meta data
+        Bundle bundle = mVideoView.getMediaMeta();
+        KSYMediaMeta meta = KSYMediaMeta.parse(bundle);
+        if (meta != null) {
+            if (meta.mHttpConnectTime > 0) {
+                double http_connection_time = Double.valueOf(meta.mHttpConnectTime);
+                mHttpConnectionTime.setText("HTTP Connection Time: " + (int) http_connection_time);
+            }
+
+            int dns_time = meta.mAnalyzeDnsTime;
+            if (dns_time > 0) {
+                mDNSTime.setText("DNS time: " + dns_time);
+            }
+        }
+
+        mSdkVersion.setText("SDK version: " + mVideoView.getVersion());
+
+        mVideoResolution.setText("Resolution:" + mVideoView.getVideoWidth() + "x" + mVideoView.getVideoHeight());
+
+        mStartTime = System.currentTimeMillis();
+        chooseDebug = settings.getString("choose_debug", "信息为空");
+        if (chooseDebug.isEmpty() || chooseDebug.equals(Settings.DEBUGOFF)) {
+            Log.e("VideoPlayer", "关闭");
+            mSdkVersion.setVisibility(View.GONE);
+            mVideoResolution.setVisibility(View.GONE);
+            mVideoBitrate.setVisibility(View.GONE);
+            mLoadText.setVisibility(View.GONE);
+            mCpu.setVisibility(View.GONE);
+            mMemInfo.setVisibility(View.GONE);
+            mVideoBufferTime.setVisibility(View.GONE);
+            mAudioBufferTime.setVisibility(View.GONE);
+            mServerIp.setVisibility(View.GONE);
+            mDNSTime.setVisibility(View.GONE);
+            mHttpConnectionTime.setVisibility(View.GONE);
+            mBufferEmptyCnt.setVisibility(View.GONE);
+            mBufferEmptyDuration.setVisibility(View.GONE);
+            mDecodeFps.setVisibility(View.GONE);
+            mOutputFps.setVisibility(View.GONE);
+        } else {
+            Log.e("VideoPlayer", "开启");
+
+            mSdkVersion.setVisibility(View.VISIBLE);
+            mVideoResolution.setVisibility(View.VISIBLE);
+            mVideoBitrate.setVisibility(View.VISIBLE);
+            mLoadText.setVisibility(View.VISIBLE);
+            mCpu.setVisibility(View.VISIBLE);
+            mMemInfo.setVisibility(View.VISIBLE);
+            mVideoBufferTime.setVisibility(View.VISIBLE);
+            mAudioBufferTime.setVisibility(View.VISIBLE);
+            mServerIp.setVisibility(View.VISIBLE);
+            mDNSTime.setVisibility(View.VISIBLE);
+            mHttpConnectionTime.setVisibility(View.VISIBLE);
+            mBufferEmptyCnt.setVisibility(View.VISIBLE);
+            mBufferEmptyDuration.setVisibility(View.VISIBLE);
+            mDecodeFps.setVisibility(View.VISIBLE);
+            mOutputFps.setVisibility(View.VISIBLE);
+        }
+    }
+
     private IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(IMediaPlayer mp) {
-            Log.d("VideoPlayer", "OnPrepared");
-            mVideoWidth = mVideoView.getVideoWidth();
-            mVideoHeight = mVideoView.getVideoHeight();
-
-            // Set Video Scaling Mode
-            mVideoView.setVideoScalingMode(KSYMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
-
-            ByteBuffer rawBuffer[] = new ByteBuffer[5];     //5 buffers is just an example
-            for (int index = 0; index < rawBuffer.length; index++) {
-                int yStride = (mVideoWidth + 15) / 16 * 16;
-                int cStride = ((yStride / 2) + 15) / 16 * 16;
-                rawBuffer[index] = ByteBuffer.allocate(yStride * mVideoHeight + cStride * mVideoHeight);
-                mVideoView.addVideoRawBuffer(rawBuffer[index].array());
-            }
-
-
-            //start player
-            mVideoView.start();
-
-            //set progress
-            setVideoProgress(0);
-
-            if (mQosThread != null && !mQosThread.isAlive())
-                mQosThread.start();
-
-            if (mVideoView.getServerAddress() != null)
-                mServerIp.setText("ServerIP: " + mVideoView.getServerAddress());
-
-            //  get meta data
-            Bundle bundle = mVideoView.getMediaMeta();
-            KSYMediaMeta meta = KSYMediaMeta.parse(bundle);
-            if (meta != null) {
-                if (meta.mHttpConnectTime > 0) {
-                    double http_connection_time = Double.valueOf(meta.mHttpConnectTime);
-                    mHttpConnectionTime.setText("HTTP Connection Time: " + (int) http_connection_time);
-                }
-
-                int dns_time = meta.mAnalyzeDnsTime;
-                if (dns_time > 0) {
-                    mDNSTime.setText("DNS time: " + dns_time);
-                }
-            }
-
-            mSdkVersion.setText("SDK version: " + mVideoView.getVersion());
-
-            mVideoResolution.setText("Resolution:" + mVideoView.getVideoWidth() + "x" + mVideoView.getVideoHeight());
-
-            mStartTime = System.currentTimeMillis();
-            chooseDebug = settings.getString("choose_debug", "信息为空");
-            if (chooseDebug.isEmpty() || chooseDebug.equals(Settings.DEBUGOFF)) {
-                Log.e("VideoPlayer", "关闭");
-                mSdkVersion.setVisibility(View.GONE);
-                mVideoResolution.setVisibility(View.GONE);
-                mVideoBitrate.setVisibility(View.GONE);
-                mLoadText.setVisibility(View.GONE);
-                mCpu.setVisibility(View.GONE);
-                mMemInfo.setVisibility(View.GONE);
-                mVideoBufferTime.setVisibility(View.GONE);
-                mAudioBufferTime.setVisibility(View.GONE);
-                mServerIp.setVisibility(View.GONE);
-                mDNSTime.setVisibility(View.GONE);
-                mHttpConnectionTime.setVisibility(View.GONE);
-                mBufferEmptyCnt.setVisibility(View.GONE);
-                mBufferEmptyDuration.setVisibility(View.GONE);
-                mDecodeFps.setVisibility(View.GONE);
-                mOutputFps.setVisibility(View.GONE);
-            } else {
-                Log.e("VideoPlayer", "开启");
-
-                mSdkVersion.setVisibility(View.VISIBLE);
-                mVideoResolution.setVisibility(View.VISIBLE);
-                mVideoBitrate.setVisibility(View.VISIBLE);
-                mLoadText.setVisibility(View.VISIBLE);
-                mCpu.setVisibility(View.VISIBLE);
-                mMemInfo.setVisibility(View.VISIBLE);
-                mVideoBufferTime.setVisibility(View.VISIBLE);
-                mAudioBufferTime.setVisibility(View.VISIBLE);
-                mServerIp.setVisibility(View.VISIBLE);
-                mDNSTime.setVisibility(View.VISIBLE);
-                mHttpConnectionTime.setVisibility(View.VISIBLE);
-                mBufferEmptyCnt.setVisibility(View.VISIBLE);
-                mBufferEmptyDuration.setVisibility(View.VISIBLE);
-                mDecodeFps.setVisibility(View.VISIBLE);
-                mOutputFps.setVisibility(View.VISIBLE);
-            }
+            InitView();
         }
     };
 
@@ -305,6 +308,7 @@ public class TextureVodActivity extends Activity implements View.OnClickListener
                     Toast.makeText(mContext, "Video Rendering Start", Toast.LENGTH_SHORT).show();
                     break;
                 case KSYMediaPlayer.MEDIA_INFO_RELOADED:
+                    InitView();
                     Toast.makeText(mContext, "Succeed to reload video.", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Succeed to reload video.");
                     return false;

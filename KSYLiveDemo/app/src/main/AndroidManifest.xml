@@ -81,6 +81,10 @@
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+        <activity android:name=".player.activity.MultiplePlayerActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
         <activity android:name=".player.activity.PlayerActivity"
             android:screenOrientation="portrait"></activity>
 

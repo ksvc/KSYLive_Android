@@ -69,7 +69,11 @@ public class HistoryActivity extends Activity {
                     Intent intent = new Intent(HistoryActivity.this, FloatingVideoActivity.class);
                     intent.putExtra("path", path);
                     startActivity(intent);
-                }else {
+                } else if (playerType.equals(Settings.MULTIPLE_PLAYER)){
+                    Intent intent = new Intent(HistoryActivity.this, MultiplePlayerActivity.class);
+                    intent.putExtra("path", path);
+                    startActivity(intent);
+                } else {
                     Intent intent = new Intent(HistoryActivity.this, PlayRecordActivity.class);
                     intent.putExtra("path", path);
                     startActivity(intent);

@@ -29,7 +29,7 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
     private RadioButton radioFloating;
     private RadioButton radioRecord;
     private Switch debugSwitch;
-
+    private RadioButton radioMultiplePlayer;
 //    private Spinner mSpinner;
 
     private RadioGroup mChooseCodec;
@@ -129,7 +129,7 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
         radioVod = (RadioButton) findViewById(R.id.type_vod);
         radioFloating = (RadioButton) findViewById(R.id.type_floating);
         radioRecord = (RadioButton) findViewById(R.id.type_record);
-
+        radioMultiplePlayer = (RadioButton) findViewById(R.id.type_multiple_player);
         mBufferSize.setText(bufferSize);
         mBufferTime.setText(bufferTime);
 
@@ -171,6 +171,9 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
             case Settings.RECORD:
                 mChooseType.check(radioRecord.getId());
                 break;
+            case Settings.MULTIPLE_PLAYER:
+                mChooseType.check(radioMultiplePlayer.getId());
+                break;
             default:
                 mChooseType.check(radioLive.getId());
                 editor.putString("choose_type", Settings.LIVE);
@@ -200,6 +203,9 @@ public class SettingActivity extends AppCompatActivity implements RadioGroup.OnC
                 break;
             case R.id.type_record:
                 editor.putString("choose_type", Settings.RECORD);
+                break;
+            case R.id.type_multiple_player:
+                editor.putString("choose_type", Settings.MULTIPLE_PLAYER);
                 break;
             default:
                 break;
