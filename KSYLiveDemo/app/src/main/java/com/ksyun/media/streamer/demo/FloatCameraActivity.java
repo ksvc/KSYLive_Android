@@ -2,6 +2,8 @@ package com.ksyun.media.streamer.demo;
 
 import com.ksyun.live.demo.R;
 import android.content.Intent;
+import android.util.Log;
+import android.view.Surface;
 
 import butterknife.OnClick;
 
@@ -32,6 +34,11 @@ public class FloatCameraActivity extends BaseCameraActivity {
     protected void handleOnResume() {
         // 重新设置预览View，防止从悬浮窗回来后黑屏
         mStreamer.setDisplayPreview(mGLSurfaceView);
+        // 重新设置旋转参数，防止从悬浮窗回来后画面变形
+        mStreamer.setRotateDegrees(getDisplayRotation());
+        // 重新绘制水印，防止从悬浮窗出来后水印大小出错
+        hideWaterMark();
+        showWaterMark();
         // 调用KSYStreamer的onResume接口
         mStreamer.onResume();
         // 停止背景图采集
@@ -55,5 +62,20 @@ public class FloatCameraActivity extends BaseCameraActivity {
             mStreamer.setUseDummyAudioCapture(true);
         }
         mSwitchToFloatView = false;
+    }
+
+    private int getDisplayRotation() {
+        int rotation = getWindowManager().getDefaultDisplay().getRotation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
+        }
+        return 0;
     }
 }
