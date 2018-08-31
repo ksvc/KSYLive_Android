@@ -100,7 +100,6 @@
         android:layout_marginRight="10dp"
         android:orientation="vertical">
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
@@ -153,4 +152,11 @@
             android:textSize="14sp">
         </Spinner>
     </LinearLayout>
+
+    <com.ksyun.media.streamer.demo.sticker.window.StickerWindow
+        android:id="@+id/sticker_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
 </RelativeLayout>

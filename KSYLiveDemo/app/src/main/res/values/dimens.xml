@@ -51,4 +51,5 @@
     <dimen name="player_panel_start_btn">50dp</dimen>
     <dimen name="popup_gap">8dp</dimen>
 
+    <dimen name="sticker_list_height">150dp</dimen>
 </resources>

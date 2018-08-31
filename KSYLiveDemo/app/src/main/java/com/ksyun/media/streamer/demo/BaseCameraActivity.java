@@ -446,6 +446,11 @@ public class BaseCameraActivity extends Activity implements
             case StreamerConstants.KSY_STREAMER_EST_BW_DROP:
                 Log.d(TAG, "BW drop to " + msg1 / 1000 + "kpbs");
                 break;
+            case StreamerConstants.KSY_STREAMER_PREVIEW_VIEW_SIZE_CHANGED:
+                // 如果你的预览View尺寸会动态变化，则会收到该回调。
+                // 要保证预览View比例变化时，预览、推流画面不变形，需要在该回调中再次配置预览、推流分辨率。
+                Log.d(TAG, "The set preview view size changed to: " + msg1 + "x" + msg2);
+                break;
             default:
                 break;
         }
@@ -528,6 +533,7 @@ public class BaseCameraActivity extends Activity implements
                 String[] permissions = {Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO,
                         Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_PHONE_STATE};
                 ActivityCompat.requestPermissions(this, permissions,
                         PERMISSION_REQUEST_CAMERA_AUDIOREC);
