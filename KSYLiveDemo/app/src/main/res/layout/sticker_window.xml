@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+
+    <com.ksyun.media.streamer.demo.sticker.KSYStickerView
+        android:id="@+id/sticker_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/sticker_choose"
+        layout="@layout/sticker_choose"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sticker_list_height"
+        android:layout_gravity="bottom" />
+</FrameLayout>

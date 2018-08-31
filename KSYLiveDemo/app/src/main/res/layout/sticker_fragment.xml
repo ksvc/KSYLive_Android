@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal">
+    <CheckBox
+        android:id="@+id/cb_sticker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:background="#11123456"
+        android:checked="true"
+        android:text="显示贴纸"
+        android:textColor="@color/font_color_35"
+        android:textSize="@dimen/font_size_28px">
+    </CheckBox>
+
+    <TextView
+        android:id="@+id/tv_sticker"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:background="#11123456"
+        android:text="添加贴纸"
+        android:textColor="@color/font_color_35"
+        android:textSize="@dimen/font_size_28px">
+    </TextView>
+
+</LinearLayout>

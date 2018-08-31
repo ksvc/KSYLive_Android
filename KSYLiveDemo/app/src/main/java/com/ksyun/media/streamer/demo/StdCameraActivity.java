@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ksyun.media.streamer.capture.camera.CameraTouchHelper;
+import com.ksyun.media.streamer.demo.sticker.window.StickerWindow;
 import com.ksyun.media.streamer.kit.StreamerConstants;
 import com.ksyun.media.streamer.util.gles.GLRender;
 import com.lht.paintview.PaintView;
@@ -85,12 +86,15 @@ public class StdCameraActivity extends BaseCameraActivity {
     protected LinearLayout mFunctionDetailLayout;
     @BindView(R.id.start_record_tv)
     protected TextView mRecordingText;
+    @BindView(R.id.sticker_window)
+    protected StickerWindow mStickerWindow;
 
     protected Fragment mEmptyFragment;
     protected WaterMarkFragment mWaterMarkFragment;
     protected StreamFuncFragment mStreamFuncFragment;
     protected AudioFuncFragment mAudioFuncFragment;
     protected VideoFilterFragment mVideoFilterFragment;
+    protected StickerFragment mStickerFragment;
 
     protected volatile boolean mRecording;
     protected int mLastRotation;
@@ -156,12 +160,14 @@ public class StdCameraActivity extends BaseCameraActivity {
         mStreamFuncFragment = new StreamFuncFragment();
         mAudioFuncFragment = new AudioFuncFragment();
         mVideoFilterFragment = new VideoFilterFragment();
+        mStickerFragment = new StickerFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.function_detail, mEmptyFragment);
         transaction.add(R.id.function_detail, mWaterMarkFragment);
         transaction.add(R.id.function_detail, mStreamFuncFragment);
         transaction.add(R.id.function_detail, mAudioFuncFragment);
         transaction.add(R.id.function_detail, mVideoFilterFragment);
+        transaction.add(R.id.function_detail, mStickerFragment);
         hideFragments(transaction);
         transaction.commit();
     }
@@ -172,6 +178,7 @@ public class StdCameraActivity extends BaseCameraActivity {
         transaction.hide(mStreamFuncFragment);
         transaction.hide(mAudioFuncFragment);
         transaction.hide(mVideoFilterFragment);
+        transaction.hide(mStickerFragment);
     }
 
     @Override
@@ -181,7 +188,7 @@ public class StdCameraActivity extends BaseCameraActivity {
 
         // 功能选择下拉框
         createFragments();
-        String[] items = new String[]{"水印设置", "推流设置", "音频设置", "视频滤镜"};
+        String[] items = new String[]{"水印设置", "推流设置", "音频设置", "视频滤镜", "添加贴纸"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -210,6 +217,9 @@ public class StdCameraActivity extends BaseCameraActivity {
                         break;
                     case 3:
                         fragment = mVideoFilterFragment;
+                        break;
+                    case 4:
+                        fragment = mStickerFragment;
                         break;
                     default:
                         fragment = mEmptyFragment;
@@ -300,6 +310,9 @@ public class StdCameraActivity extends BaseCameraActivity {
                 mRecordingText.postInvalidate();
                 mRecording = false;
                 stopChronometer();
+                break;
+            case StreamerConstants.KSY_STREAMER_PREVIEW_VIEW_SIZE_CHANGED:
+                mStickerFragment.onViewSizeChanged();
                 break;
             default:
                 break;
@@ -407,6 +420,13 @@ public class StdCameraActivity extends BaseCameraActivity {
             default:
                 super.handleOnPause();
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(!mStickerFragment.onBackPressed()){
+            super.onBackPressed();
         }
     }
 
