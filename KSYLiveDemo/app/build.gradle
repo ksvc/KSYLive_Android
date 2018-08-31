@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.h6ah4i.android.widget.verticalseekbar:verticalseekbar:0.7.2'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     implementation project(':libksylive')
     implementation files('libs/zxing.jar')
 }
