@@ -115,12 +115,12 @@ allprojects {
 
 dependencies {
     # required, enough for most devices.
-    compile 'com.ksyun.media:libksylive-java:3.0.0'
-    compile 'com.ksyun.media:libksylive-armv7a:3.0.0'
+    compile 'com.ksyun.media:libksylive-java:3.0.4'
+    compile 'com.ksyun.media:libksylive-armv7a:3.0.4'
 
     # Other ABIs: optional
-    compile 'com.ksyun.media:libksylive-arm64:3.0.0'
-    compile 'com.ksyun.media:libksylive-x86:3.0.0'
+    compile 'com.ksyun.media:libksylive-arm64:3.0.4'
+    compile 'com.ksyun.media:libksylive-x86:3.0.4'
 }
 ```
 
@@ -138,7 +138,7 @@ dependencies {
 | 类型    | 描述|
 | :---: | :---:| 
 |SDK名称|KSYLive_android|
-| SDK版本 | v2.5.0|
+| SDK版本 | v3.0.4|
 | 设备型号  | oppo r9s  |
 | OS版本  | Android 6.0.1 |
 | 问题描述  | 描述问题出现的现象  |
